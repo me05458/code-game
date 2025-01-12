@@ -15,9 +15,6 @@ $(LINK_TARGET): $(OBJS)
 %.o : %.c
 	gcc -o $@ -c $<
 
-libs:
-	sudo dnf install libsodium-devel
-
 helloworld.o : helloworld.h cards.h
 cards.o : cards.h
 
