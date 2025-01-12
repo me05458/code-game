@@ -13,7 +13,7 @@
 //||         ||
 // |||||||||||
 
-void renderCards(int cards, int* cols, int* nums, int spcards, )
+void renderCards(int cards, int* cols, int* nums)
 {
 	int* secure = cols;
 	for(int i = 0; i<cards; i++)

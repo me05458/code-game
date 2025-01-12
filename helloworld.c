@@ -181,6 +181,12 @@ second_step: //user gueses or discards
 					scanf("%d", &d);
 					cleanChar();
 					//are the guesses right?
+					if (a == b || a == c || a == d || b == c || b == d || c == d)
+					{
+						printf("you may not use a card more than once!\n");
+						goto second_step;
+					}
+
 					int ch1 = compareCard(p1,tmp,handcol[a],handnum[a]);
 					int ch2 = compareCard(p2,tmp,handcol[b],handnum[b]);
 					int ch3 = compareCard(p3,tmp,handcol[c],handnum[c]);
