@@ -1,7 +1,7 @@
 LINK_TARGET = game
 
 OBJS = \
-       helloworld.o \
+       game.o \
        cards.o
 
 REBUILDABLES = $(OBJS) $(LINK_TARGET)
@@ -15,7 +15,7 @@ $(LINK_TARGET): $(OBJS)
 %.o : %.c
 	gcc -o $@ -c $<
 
-helloworld.o : helloworld.h cards.h
+game.o : game.h cards.h
 cards.o : cards.h
 
 clean:
