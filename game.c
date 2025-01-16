@@ -10,14 +10,6 @@
 #define FALSE 0
 #define TRUE 1
 
-//turn characters into ints, not needed but fun
-int charEater(char c)
-{
-	int result =  c - '0'; //the numbers are consecutive so subtract 0
-	if(result > 9||result<0) //it's a letter/other character
-		return -1;
-	return result;
-}
 
 //reset the character input area
 //idk how it works copied off a forum
