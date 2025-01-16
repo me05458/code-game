@@ -36,12 +36,14 @@ typedef struct{
 void renderBar(int tmp, puzzlePiece p1, puzzlePiece p2, puzzlePiece p3, puzzlePiece p4)
 {
 	system("clear"); //I know, I know, I'm working on it
-	printf("-------------------------\n");
+	printf("------------------------------------------------\n");
+	printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",p1.col, p2.col,p3.col,p4.col);
 	for(int i = 0; i<tmp; i++) //wanna do each of the possible numbers
 	{
-		printf("\e[%dm%d \t\e[%dm%d \t\e[%dm%d \t\e[%dm%d \n\e[0m",p1.col, p1.nums[i], p2.col, p2.nums[i], p3.col, p3.nums[i], p4.col, p4.nums[i]);
+		printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  || \n",p1.col, p1.nums[i], p2.col, p2.nums[i], p3.col, p3.nums[i], p4.col, p4.nums[i]);
 	}
-	printf("-------------------------\n");
+	printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",p1.col, p2.col,p3.col,p4.col);
+	printf("------------------------------------------------\n");
 }
 
 //check if a card matches a puzzlePiece
