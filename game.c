@@ -71,6 +71,7 @@ int main()
 	int handcol[9];
 	int handnum[9];
 	int cardnum = 0;
+	int wildnum = 0;
 	//this is some initialization nonsense
 	char randString[32];
 	if(sodium_init() <0){ //random library died! Oh no!
@@ -99,6 +100,7 @@ int main()
 	while(4 != FALSE) //in other words, FOREVER (I didn't remember exact val of FALSE)
 	{
 		cardnum = 4; //cards in hand
+		wildnum = 0;
 		for(int i = 0; i<cardnum; i++)//random initial hand
 		{
 			handcol[i] = colStore[randombytes_uniform(4)];
@@ -124,7 +126,7 @@ int main()
 		renderBar(tmp, p1, p2, p3, p4);
 		//has the user got it yet?
 		int solved = FALSE;
-		renderCards(cardnum,handcol, handnum); //show cards
+		renderCards(cardnum,handcol, handnum, wildnum); //show cards
 		while(solved == FALSE) //until the user gets it...
 		{
 			int tmp1 = 0; //I'm gonna put characters in here
@@ -137,6 +139,14 @@ first_step: //part when user says to draw card
 					printf("Available actions:\n0:this list\n1:new card\n9:quit\n");
 					goto first_step;
 				case 1: //draw card
+					int something = randombytes_uniform(10);
+					if(something == 7) //1 in 10 chance of wild card
+					{
+						wildnum++; //wow more wildcards
+						renderBar(tmp,p1,p2,p3,p4); //draw
+						renderCards(cardnum,handcol,handnum,wildnum);
+						goto second_step; //proceed (don't draw another card!)
+					}
 					cardnum++; //wow, more cards now
 					if(cardnum>9) //oh no too many cards why?
 					{
@@ -147,7 +157,7 @@ first_step: //part when user says to draw card
 					handcol[cardnum -1] = colStore[randombytes_uniform(4)];
 					handnum[cardnum -1] = randombytes_uniform(6);
 					renderBar(tmp, p1, p2, p3, p4); //draw
-					renderCards(cardnum, handcol, handnum);
+					renderCards(cardnum, handcol, handnum,wildnum);
 					goto second_step; //okay cool advance
 				case 9: //quit
 					return 0;
@@ -165,7 +175,7 @@ second_step: //user gueses or discards
 					goto second_step;
 				case 1://guess
 					renderBar(tmp,p1,p2,p3,p4);
-					renderCards(cardnum,handcol,handnum);
+					renderCards(cardnum,handcol,handnum,wildnum);
 					//painstakingly gather guesses
 					printf("First card:");
 					int a, b, c, d;
@@ -186,17 +196,70 @@ second_step: //user gueses or discards
 						printf("you may not use a card more than once!\n");
 						goto second_step;
 					}
-
-					int ch1 = compareCard(p1,tmp,handcol[a],handnum[a]);
-					int ch2 = compareCard(p2,tmp,handcol[b],handnum[b]);
-					int ch3 = compareCard(p3,tmp,handcol[c],handnum[c]);
-					int ch4 = compareCard(p4,tmp,handcol[d],handnum[d]);
+					int ch1, ch2, ch3, ch4;
+					if(a >= cardnum)
+					{
+						if(cardnum+wildnum < a) {
+							printf("Not a real card!\n");
+							goto second_step;
+						}
+						else
+						{
+							ch1 = TRUE;
+						}
+					}
+					else{
+						ch1 = compareCard(p1,tmp,handcol[a],handnum[a]);
+					}
+					if(b >= cardnum)
+					{
+						if(cardnum+wildnum <= b) {
+							printf("Not a real card!\n");
+							goto second_step;
+						}
+						else
+						{
+							ch2 = TRUE;
+						}
+					}
+					else{
+						ch2 = compareCard(p2,tmp,handcol[b],handnum[b]);
+					}
+					if(c >= cardnum)
+					{
+						if(cardnum+wildnum <= c) {
+							printf("Not a real card!\n");
+							goto second_step;
+						}
+						else
+						{
+							ch3 = TRUE;
+						}
+					}
+					else{
+						ch3 = compareCard(p3,tmp,handcol[c],handnum[c]);
+					}
+					if(d >= cardnum)
+					{
+						if(cardnum+wildnum <= d) {
+							printf("Not a real card!\n");
+							goto second_step;
+						}
+						else
+						{
+							ch2 = TRUE;
+						}
+					}
+					else{
+						ch4 = compareCard(p4,tmp,handcol[d],handnum[d]);
+					}
 					if(ch1 == 1 && ch2 == 1 && ch3 == 1 && ch4 == 1)
 					{
 						printf("You guessed it! Another round?(1/0)");
 						solved = TRUE; //okay they got it
 						int thing; //put some characters here
 						scanf("%d",&thing);
+						cleanChar();
 						if(thing == 0)
 							return 0; //oh the user wants to quit
 						goto last_step;
@@ -208,10 +271,17 @@ second_step: //user gueses or discards
 					int store; //we put numbers in here
 					scanf("%d",&store);
 					cleanChar();
-					if(store >= cardnum||store<0) //what? Nonsense!
+					if(store >= cardnum+wildnum||store<0) //what? Nonsense!
 					{
 						printf("Not a valid card\n");
 						goto second_step; //make em do it again
+					}
+					if(store >= cardnum)
+					{
+						wildnum--;
+						renderBar(tmp,p1,p2,p3,p4);
+						renderCards(cardnum,handcol,handnum,wildnum);
+						goto last_step;
 					}
 					if(store == cardnum-1){ //last card, nice!
 						cardnum--; //just remove one of everything
@@ -232,7 +302,7 @@ second_step: //user gueses or discards
 					}
 					//draw
 					renderBar(tmp,p1,p2,p3,p4);
-					renderCards(cardnum,handcol,handnum);
+					renderCards(cardnum,handcol,handnum,wildnum);
 					goto last_step; //okay done
 				case 9:
 					return 0; //quit
