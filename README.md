@@ -1,6 +1,6 @@
 # code-game
 Basic terminal card/matching game for linux that gives codes for the user to break using cards.\
-So far, it only does color/number cards (no wildcards/actions/etc).\
+So far, it makes color/number cards and wildcards that can be played on anything (no color/number wild cards or action cards).\
 Has only been tested on fedora and debian but there's a good chance it will work on most other kinds of linux.
 
 # requirements
