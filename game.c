@@ -1,14 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sodium.h>
+#include "pieces.h"
 #include "cards.h"
+#include "bar.h"
 
-#define RED 31
-#define YELLOW 33
-#define GREEN 32
-#define BLUE 36
-#define FALSE 0
-#define TRUE 1
+
 
 
 //reset the character input area
@@ -18,40 +15,10 @@ void cleanChar()
 	while(getchar() != '\n')
 		continue;
 }
-//typedef so I can make arrays, this is a puzzle piece
-typedef struct{
-	int nums[10]; //doesn't necessarily have that many numbers, just spaces for em
-	int col;
-}puzzlePiece;
+
 
 //draw the thing that shows all puzzle pieces (and clear)
-void renderBar(int tmp, puzzlePiece p1, puzzlePiece p2, puzzlePiece p3, puzzlePiece p4)
-{
-	system("clear"); //I know, I know, I'm working on it
-	printf("------------------------------------------------\n");
-	printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",p1.col, p2.col,p3.col,p4.col);
-	for(int i = 0; i<tmp; i++) //wanna do each of the possible numbers
-	{
-		printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  || \n",p1.col, p1.nums[i], p2.col, p2.nums[i], p3.col, p3.nums[i], p4.col, p4.nums[i]);
-	}
-	printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",p1.col, p2.col,p3.col,p4.col);
-	printf("------------------------------------------------\n");
-}
 
-//check if a card matches a puzzlePiece
-int compareCard(puzzlePiece p, int tmp, int col, int num)
-{
-	if(p.col != col) //must have same color
-	{
-		return FALSE;
-	}
-	for(int i = 0; i<tmp; i++) //any of the numbers must match
-	{
-		if(p.nums[i] == num)
-			return TRUE;
-	}
-	return FALSE;
-}
 
 int main()
 {
@@ -93,6 +60,7 @@ int main()
 	}
 	while(4 != FALSE) //in other words, FOREVER (I didn't remember exact val of FALSE)
 	{
+		printf("I got here\n");
 		cardnum = 4; //cards in hand
 		wildnum = 0;
 		for(int i = 0; i<cardnum; i++)//random initial hand
@@ -105,12 +73,17 @@ int main()
 		puzzlePiece p2;
 		puzzlePiece p3;
 		puzzlePiece p4;
+		int wildpiece = randombytes_uniform(3);
+
 		for(int i = 0; i<tmp; i++)
 		{
 			p1.nums[i] = randombytes_uniform(6);
 			p2.nums[i] = randombytes_uniform(6);
 			p3.nums[i] = randombytes_uniform(6);
-			p4.nums[i] = randombytes_uniform(6);
+			if(wildpiece != 2)
+				p4.nums[i] = randombytes_uniform(6);
+			else
+				p4.nums[i] = -1;
 		}
 		p1.nums[tmp+1] = -1;
 		p1.col = colStore[randombytes_uniform(4)];
@@ -247,7 +220,6 @@ second_step: //user gueses or discards
 					else{
 						ch4 = compareCard(p4,tmp,handcol[d],handnum[d]);
 					}
-					printf("%d|%d|%d|%d\n",ch1,ch2,ch3,ch4);
 					if(ch1 == 1 && ch2 == 1 && ch3 == 1 && ch4 == 1)
 					{
 						printf("You guessed it! Another round?(1/0)");
