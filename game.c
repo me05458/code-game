@@ -193,7 +193,7 @@ second_step: //user gueses or discards
 					int ch1, ch2, ch3, ch4;
 					if(a >= cardnum)
 					{
-						if(cardnum+wildnum < a) {
+						if(cardnum+wildnum <= a) {
 							printf("Not a real card!\n");
 							goto second_step;
 						}
@@ -241,12 +241,13 @@ second_step: //user gueses or discards
 						}
 						else
 						{
-							ch2 = TRUE;
+							ch4 = TRUE;
 						}
 					}
 					else{
 						ch4 = compareCard(p4,tmp,handcol[d],handnum[d]);
 					}
+					printf("%d|%d|%d|%d\n",ch1,ch2,ch3,ch4);
 					if(ch1 == 1 && ch2 == 1 && ch3 == 1 && ch4 == 1)
 					{
 						printf("You guessed it! Another round?(1/0)");
