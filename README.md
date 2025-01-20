@@ -17,9 +17,9 @@ installation:
 ```
 git clone https://github.com/me05458/code-game&&cd code-game
 make
-./game
 ```
-to run in the future just use `./game`
+to run the tutorial: `./tutorial`
+to run the game without tutorial: `./game`
 # known issues
-- no thorough explanation of gameplay exists
+- tutorial is not elegant at all (should be optimized)
 - the `system()` function poses a security vulnerability
