@@ -18,7 +18,7 @@ int main()
     int tmp; //for inputs
     int tracker; //because I'm lazy. Let it be known that this is not a particularly elegant tutorial.
     system("clear");
-    printf("------This is the code game tutorial-------\nBy the way, it's called the code game because it's a game about breaking codes, not because it's written in code (although it is).\nThis game involves writing numbers to perform actions. Can you do this? (Type a number, a 1 indicates yes, a 0 indicates no):");
+    printf("------This is the code game tutorial-------\nBy the way, it's called the code game because it's a game about breaking codes, not because it's written in code (although it is).\nThis game involves writing numbers to perform actions. Can you do this? (Type a number, a 1 indicates yes, a 0 indicates no): ");
     scanf("%d",&tmp);
     cleanChar();
     if(tmp == 0) //uh....
@@ -53,7 +53,7 @@ int main()
     renderCards(4,cols,nums,0);
     printf("However, the first action of the game is always to draw a card.\n");
 step_zero:
-    printf("Action (0 will open a menu that tells you of the available actions which vary at different steps):");
+    printf("Action (0 will open a menu that tells you of the available actions which vary at different steps): ");
     scanf(" %d",&tmp);
     cleanChar();
     if(tmp == 0)
@@ -253,6 +253,7 @@ second_step:
             cleanChar();
             if(tmp == 4)
             {
+                tracker = 1;
                 system("clear");
                 printf("------------------------------------------------\n");
                 printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
@@ -269,6 +270,7 @@ second_step:
             }
             if(tmp == 1)
             {
+                tracker = 2;
                 cols[1] = GREEN;
                 cols[2] = BLUE;
                 cols[3] = YELLOW;
@@ -435,6 +437,7 @@ fourth_step:
                     goto fourth_step;
                 }
             }
+            goto last_step;
         case 2:
             printf("This tutorial is not a full game and will not be played as such. Keep guessing until you get it.\n");
             goto fourth_step;
