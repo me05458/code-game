@@ -35,7 +35,7 @@ int main()
             return 0;
     }
     system("clear"); //I know, I know, I'm working on it
-    printf("This is the code. It is your objective to crack it by matching the right cards (more on that soon)\nIn a real game, you will be able to select how many numbers there are in each collumn. stars indicate a 'wild card' (more on that later, too)\n");
+    printf("This is the code. It is your objective to crack it by matching the right cards. To match a card, it must have the same color and one of the numbers shown in the corresponding collumn of the code.\nIn the game, you will be able to select how many numbers there are in each collumn. stars indicate a 'wild card' (more on that later)\n");
     printf("------------------------------------------------\n");
     printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE); //yes I just repeat this over and over
     for(int i = 0; i<3; i++) //wanna do each of the possible numbers
