@@ -16,8 +16,20 @@ void cleanChar()
 		continue;
 }
 
-
-//draw the thing that shows all puzzle pieces (and clear)
+//Insertion sort to make the peices pretty
+void sort(int arraySize, int* array)
+{
+	for(int i = 1; i<arraySize; i++)
+	{
+		int key = array[i];
+		int j = i - 1;
+		while (j >= 0 && array[j] > key) {
+			array[j + 1] = array[j];
+			j = j - 1;
+		}
+		array[j + 1] = key;
+	}
+}
 
 
 int main()
@@ -45,14 +57,14 @@ int main()
 	int tmp = -1;
 	while(tmp <=0) //make user give number
 	{
-		printf("How many numbers do you want? (can't be more than 9):");
+		printf("How many numbers do you want? (can't be more than 6):");
 		int input;
 		scanf(" %d",&input);
 		tmp = input;
 		cleanChar();
 		if(tmp <=0)
 			printf("Not a suitable number\n");
-		if(tmp >9)//character? gross
+		if(tmp >6)//character? gross (Also I don't like 7 8 9)
 		{
 			printf("I refuse to use that number\n");
 			tmp = -1;
@@ -60,7 +72,6 @@ int main()
 	}
 	while(4 != FALSE) //in other words, FOREVER (I didn't remember exact val of FALSE)
 	{
-		printf("I got here\n");
 		cardnum = 4; //cards in hand
 		wildnum = 0;
 		for(int i = 0; i<cardnum; i++)//random initial hand
@@ -74,7 +85,6 @@ int main()
 		puzzlePiece p3;
 		puzzlePiece p4;
 		int wildpiece = randombytes_uniform(3);
-
 		for(int i = 0; i<tmp; i++)
 		{
 			p1.nums[i] = randombytes_uniform(6);
@@ -85,7 +95,86 @@ int main()
 			else
 				p4.nums[i] = -1;
 		}
+		int thing = 0;
+		while(thing != 1)
+		{
+			thing = 1;
+			for(int i=0; i<tmp; i++)
+			{
+				for(int j = 0; j<tmp; j++)
+				{
+					if((p1.nums[i] == p1.nums[j])&&j!=i)
+					{
+						printf("%d|%d\n",i,j);
+						p1.nums[i] = randombytes_uniform(6);
+						thing = 0;
+						break;
+					}
+				}
+			}
+		}
+		thing = 0;
+		if(p4.nums[0] != -1)
+		{
+			while(thing != 1)
+			{
+				thing = 1;
+				for(int i=0; i<tmp; i++)
+				{
+					for(int j = 0; j<tmp; j++)
+					{
+						if((p4.nums[i] == p4.nums[j])&&j!=i)
+						{
+							printf("%d|%d\n",i,j);
+							p4.nums[i] = randombytes_uniform(6);
+							thing = 0;
+							break;
+						}
+					}
+				}
+			}
+		}
+		thing = 0;
+		while(thing != 1)
+		{
+			thing = 1;
+			for(int i=0; i<tmp; i++)
+			{
+				for(int j = 0; j<tmp; j++)
+				{
+					if((p3.nums[i] == p3.nums[j])&&j!=i)
+					{
+						printf("%d|%d\n",i,j);
+						p3.nums[i] = randombytes_uniform(6);
+						thing = 0;
+						break;
+					}
+				}
+			}
+		}
+		thing = 0;
+		while(thing != 1)
+		{
+			thing = 1;
+			for(int i=0; i<tmp; i++)
+			{
+				for(int j = 0; j<tmp; j++)
+				{
+					if((p2.nums[i] == p2.nums[j])&&j!=i)
+					{
+						printf("%d|%d\n",i,j);
+						p2.nums[i] = randombytes_uniform(6);
+						thing = 0;
+						break;
+					}
+				}
+			}
+		}
 		p1.nums[tmp+1] = -1;
+		sort(tmp, p1.nums);
+		sort(tmp, p2.nums);
+		sort(tmp, p3.nums);
+		sort(tmp, p4.nums);
 		p1.col = colStore[randombytes_uniform(4)];
 		p2.col = colStore[randombytes_uniform(4)];
 		p3.col = colStore[randombytes_uniform(4)];
