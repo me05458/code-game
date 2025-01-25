@@ -106,5 +106,5 @@ void renderCards(int cards, int* cols, int* nums, int wild, int draw)
 	{
 		printf("\e[0m |||||||||||   ");
 	}
-	printf("\e[0m\n");
+	printf("\e[0m\n\n");
 }

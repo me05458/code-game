@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include "pieces.h"
 #include "bar.h"
-void renderBar(int tmp, puzzlePiece p1, puzzlePiece p2, puzzlePiece p3, puzzlePiece p4)
+void renderBar(int tmp, puzzlePiece p1, puzzlePiece p2, puzzlePiece p3, puzzlePiece p4,int turns, int step)
 {
     system("clear"); //I know, I know, I'm working on it
+    printf("Turns: %d\tStep: %d\n",turns,step);
     printf("------------------------------------------------\n");
     printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",p1.col, p2.col,p3.col,p4.col);
     for(int i = 0; i<tmp; i++) //wanna do each of the possible numbers
