@@ -50,7 +50,7 @@ int main()
     printf("These are your cards. Each card has a number and color. To win, you must match the numbers and colors of cards to the code.\n");
     int cols[5] = {RED,YELLOW,GREEN,BLUE,YELLOW}; //this is the "hand"
     int nums[5] = {1,5,3,5,4}; //note that the drawn card is alreaady in the set
-    renderCards(4,cols,nums,0);
+    renderCards(4,cols,nums,0,0);
     printf("However, the first action of the game is always to draw a card.\n");
 step_zero:
     printf("Action (0 will open a menu that tells you of the available actions which vary at different steps): ");
@@ -99,7 +99,7 @@ first_step:
             }
             printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
             printf("------------------------------------------------\n");
-            renderCards(5,cols, nums,0);
+            renderCards(5,cols, nums,0,0);
             break;
         case 9:
             return 0;
@@ -120,7 +120,7 @@ onepointfive_step:
     }
     printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
     printf("------------------------------------------------\n");
-    renderCards(5,cols,nums,0);
+    renderCards(5,cols,nums,0,0);
     printf("Unfortunately, you cannot guess the sequence right now. While you do have the right colors, neither card 1 nor 4 have the numbers shown on the yellow puzzle card, however, you are welcome to try.\n");
     printf("Otherwise you need to discard a card because you can only have 4 cards in your hand at the start of each round.\n");
     printf("Action (0 for help): ");
@@ -172,7 +172,7 @@ onepointfive_step:
             }
             printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
             printf("------------------------------------------------\n");
-            renderCards(4,cols,nums,0);
+            renderCards(4,cols,nums,0,0);
             goto twoptfive_step;
         }
         if(tmp == 1)
@@ -195,7 +195,7 @@ onepointfive_step:
             }
             printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
             printf("------------------------------------------------\n");
-            renderCards(4,cols,nums,0);
+            renderCards(4,cols,nums,0,0);
             goto twoptfive_step;
         }
         else
@@ -265,7 +265,7 @@ second_step:
                 }
                 printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
                 printf("------------------------------------------------\n");
-                renderCards(4,cols,nums,0);
+                renderCards(4,cols,nums,0,0);
                 goto twoptfive_step;
             }
             if(tmp == 1)
@@ -288,7 +288,7 @@ second_step:
                 }
                 printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
                 printf("------------------------------------------------\n");
-                renderCards(4,cols,nums,0);
+                renderCards(4,cols,nums,0,0);
                 goto twoptfive_step;
             }
             else
@@ -327,7 +327,7 @@ twoptfive_step:
     }
     printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
     printf("------------------------------------------------\n");
-    renderCards(4,cols,nums,0);
+    renderCards(4,cols,nums,0,0);
 third_step:
     printf("Action (0 for help): ");
     scanf(" %d",&tmp);
@@ -348,7 +348,7 @@ third_step:
             }
             printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
             printf("------------------------------------------------\n");
-            renderCards(4,cols,nums,1);
+            renderCards(4,cols,nums,1,0);
             printf("Congradulations! You drew a wild card! This kind of card can be considered as any color and any number.\n");
             goto fourth_step;
         case 9:
@@ -370,7 +370,7 @@ third_step:
     }
     printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
     printf("------------------------------------------------\n");
-    renderCards(4,cols,nums,1);
+    renderCards(4,cols,nums,1,0);
 fourth_step:
     printf("Action (0 for help): ");
     scanf(" %d",&tmp);
@@ -392,7 +392,7 @@ fourth_step:
             }
             printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
             printf("------------------------------------------------\n");
-            renderCards(4,cols,nums,1);
+            renderCards(4,cols,nums,1,0);
             printf("First card: ");
             int a, b, c, d;
             scanf("%d", &a);

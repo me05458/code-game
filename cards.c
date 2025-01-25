@@ -21,10 +21,17 @@
 //\\         ||
 // \\\\\|||||| 
 
-void renderCards(int cards, int* cols, int* nums, int wild)
+// |||||||||||
+//||         ||
+//||         ||
+//||  add 2  ||
+//||         ||
+//||         ||
+// |||||||||||
+void renderCards(int cards, int* cols, int* nums, int wild, int draw)
 {
 	int* secure = cols;
-	for(int i = 0; i<cards+wild; i++)
+	for(int i = 0; i<cards+wild+draw; i++)
 	{
 		printf("      %d        ", i);
 	}
@@ -37,6 +44,10 @@ void renderCards(int cards, int* cols, int* nums, int wild)
 	{
 		printf("\e[%dm ||||||\e[%dm|||||   ",RED, YELLOW);
 	}
+	for(int i = 0; i<draw; i++)
+	{
+		printf("\e[0m |||||||||||   ");
+	}
 	printf("\n");
 	for(int i = 0; i<2; i++)
 	{
@@ -48,6 +59,10 @@ void renderCards(int cards, int* cols, int* nums, int wild)
 		{
 			printf("\e[%dm||         \e[%dm||  ",RED,YELLOW);
 		}
+		for(int j = 0; j<draw; j++)
+		{
+			printf("\e[0m||         ||  ");
+		}
 		printf("\n");
 	}
 	for(int i=0; i<cards; i++)
@@ -57,6 +72,10 @@ void renderCards(int cards, int* cols, int* nums, int wild)
 	for(int i=0; i<wild; i++)
 	{
 		printf("\e[%dm||  \e[0m 123   \e[%dm||  ",BLUE,YELLOW);
+	}
+	for(int i = 0; i<draw; i++)
+	{
+		printf("\e[0m||  add 2  ||  ");
 	}
 	printf("\n");
 	for(int i = 0; i<2; i++)
@@ -69,6 +88,10 @@ void renderCards(int cards, int* cols, int* nums, int wild)
 		{
 			printf("\e[%dm||         \e[%dm||  ",BLUE,GREEN);
 		}
+		for(int j = 0; j<draw; j++)
+		{
+			printf("\e[0m||         ||  ");
+		}
 		printf("\n");
 	}
 	for(int i = 0; i<cards; i++)
@@ -78,6 +101,10 @@ void renderCards(int cards, int* cols, int* nums, int wild)
 	for(int i = 0; i<wild; i++)
 	{
 		printf("\e[%dm |||||\e[%dm||||||   ",BLUE,GREEN);
+	}
+	for(int i = 0; i<draw; i++)
+	{
+		printf("\e[0m |||||||||||   ");
 	}
 	printf("\e[0m\n");
 }
