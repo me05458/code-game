@@ -35,6 +35,7 @@ void sort(int arraySize, int* array)
 int main()
 {
 	//this is so that I can give random colors (to map them onto consecutive ints)
+	system("clear");
 	int colStore[4];
 	colStore[0] = RED;
 	colStore[1] = YELLOW;
@@ -48,7 +49,7 @@ int main()
 	//this is some initialization nonsense
 	char randString[32];
 	if(sodium_init() <0){ //random library died! Oh no!
-		printf("A Catastrophic Faliure Occured (EXIT CODE 2)");
+		printf("A Catastrophic Faliure Occured (EXIT CODE 2)\n");
 		return 2;
 	}
 	randombytes_buf(randString, 32);
@@ -57,7 +58,7 @@ int main()
 	int tmp = -1;
 	while(tmp <=0) //make user give number
 	{
-		printf("How many numbers do you want? (can't be more than 6):");
+		printf("How many numbers do you want? (can't be more than 6): ");
 		int input;
 		scanf(" %d",&input);
 		tmp = input;
@@ -187,7 +188,7 @@ int main()
 		{
 			int tmp1 = 0; //I'm gonna put characters in here
 first_step: //part when user says to draw card
-			printf("Action (0 for help):");
+			printf("Action (0 for help): ");
 			scanf(" %d",&tmp1);
 			cleanChar();
 			switch (tmp1) {
@@ -206,7 +207,7 @@ first_step: //part when user says to draw card
 					cardnum++; //wow, more cards now
 					if(cardnum>9) //oh no too many cards why?
 					{
-						printf("Something mildly bad happened (EXIT CODE 3)");
+						printf("Something mildly bad happened (EXIT CODE 3)\n");
 						return 3; //perish
 					}
 					//make it a random card
@@ -233,17 +234,17 @@ second_step: //user gueses or discards
 					renderBar(tmp,p1,p2,p3,p4);
 					renderCards(cardnum,handcol,handnum,wildnum);
 					//painstakingly gather guesses
-					printf("First card:");
+					printf("First card: ");
 					int a, b, c, d;
 					scanf("%d", &a);
 					cleanChar();
-					printf("Second card:");
+					printf("Second card: ");
 					scanf("%d", &b);
 					cleanChar();
-					printf("Third card:");
+					printf("Third card: ");
 					scanf("%d", &c);
 					cleanChar();
-					printf("Fourth card:");
+					printf("Fourth card: ");
 					scanf("%d", &d);
 					cleanChar();
 					//are the guesses right?
@@ -311,7 +312,7 @@ second_step: //user gueses or discards
 					}
 					if(ch1 == 1 && ch2 == 1 && ch3 == 1 && ch4 == 1)
 					{
-						printf("You guessed it! Another round?(1/0)");
+						printf("You guessed it! Another round?(1/0): ");
 						solved = TRUE; //okay they got it
 						int thing; //put some characters here
 						scanf("%d",&thing);
@@ -323,7 +324,7 @@ second_step: //user gueses or discards
 					printf("Nope, wrong\n"); //haha didn't get it
 					goto second_step; //make them guess/discard
 				case 2: //discard
-					printf("Type a number:");//which one?
+					printf("Type a number: ");//which one?
 					int store; //we put numbers in here
 					scanf("%d",&store);
 					cleanChar();

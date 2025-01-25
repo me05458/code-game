@@ -28,7 +28,7 @@ int main()
     }
     while(tmp != 1) //user can't enter numbers I guess
     {
-        printf("That's not a valid option. You must type either 0 or 1. Please do so now.");
+        printf("That's not a valid option. You must type either 0 or 1. Please do so now: ");
         scanf("%d",&tmp);
         cleanChar();
         if(tmp == 0)
@@ -67,7 +67,7 @@ step_zero:
     }
     if(tmp == 9)
     {
-        printf("9 is always the command to quit. Are you sure?(0/1):");
+        printf("9 is always the command to quit. Are you sure?(0/1): ");
         scanf(" %d",&tmp);
         if(tmp == 0)
         {
@@ -123,7 +123,7 @@ onepointfive_step:
     renderCards(5,cols,nums,0);
     printf("Unfortunately, you cannot guess the sequence right now. While you do have the right colors, neither card 1 nor 4 have the numbers shown on the yellow puzzle card, however, you are welcome to try.\n");
     printf("Otherwise you need to discard a card because you can only have 4 cards in your hand at the start of each round.\n");
-    printf("Action (0 for help):");
+    printf("Action (0 for help): ");
     scanf(" %d",&tmp);
     cleanChar();
     if(tmp == 0)
@@ -137,17 +137,17 @@ onepointfive_step:
     }
     if(tmp == 1)
     {
-        printf("First card:");
+        printf("First card: ");
         int a, b, c, d;
         scanf("%d", &a);
         cleanChar();
-        printf("Second card:");
+        printf("Second card: ");
         scanf("%d", &b);
         cleanChar();
-        printf("Third card:");
+        printf("Third card: ");
         scanf("%d", &c);
         cleanChar();
-        printf("Fourth card:");
+        printf("Fourth card: ");
         scanf("%d", &d);
         cleanChar();
         printf("Nope, wrong\n"); //listen, I'm lazy and this isn't a real game. If it should be right, too bad. Something went wrong.
@@ -155,7 +155,7 @@ onepointfive_step:
     }
     if(tmp == 2)
     {
-        printf("Type the number of the card you wish to discard (get rid of one of the yellow ones):");
+        printf("Type the number of the card you wish to discard (get rid of one of the yellow ones): ");
         scanf(" %d",&tmp);
         cleanChar();
         if(tmp == 4)
@@ -200,7 +200,7 @@ onepointfive_step:
         }
         else
         { //this is called the illusion of free will :3
-            printf("That card is useful to you, are you sure you want to discard it?(0/1)");
+            printf("That card is useful to you, are you sure you want to discard it?(0/1): ");
             scanf(" %d",&tmp);
             cleanChar();
             if(tmp == 0)
@@ -232,23 +232,23 @@ second_step:
             printf("Available actions:\n0:this list\n1:make a guess\n2:discard a card\n9:quit\n");
             goto second_step;
         case 1:
-            printf("First card:");
+            printf("First card: ");
             int a, b, c, d;
             scanf("%d", &a);
             cleanChar();
-            printf("Second card:");
+            printf("Second card: ");
             scanf("%d", &b);
             cleanChar();
-            printf("Third card:");
+            printf("Third card: ");
             scanf("%d", &c);
             cleanChar();
-            printf("Fourth card:");
+            printf("Fourth card: ");
             scanf("%d", &d);
             cleanChar();
             printf("Nope, wrong"); //listen, I'm lazy and this isn't a real game. If it should be right, too bad. Something went wrong.
             goto second_step;
         case 2:
-            printf("Type the number of the card you wish to discard (get rid of one of the yellow ones)");
+            printf("Type the number of the card you wish to discard (get rid of one of the yellow ones): ");
             scanf(" %d",&tmp);
             cleanChar();
             if(tmp == 4)
@@ -293,7 +293,7 @@ second_step:
             }
             else
             { //this is called the illusion of free will :3
-                printf("That card is useful to you, are you sure you want to discard it?(0/1)\n");
+                printf("That card is useful to you, are you sure you want to discard it?(0/1): \n");
                 scanf(" %d",&tmp);
                 cleanChar();
                 if(tmp == 0)
@@ -329,7 +329,7 @@ twoptfive_step:
     printf("------------------------------------------------\n");
     renderCards(4,cols,nums,0);
 third_step:
-    printf("Action (0 for help):");
+    printf("Action (0 for help): ");
     scanf(" %d",&tmp);
     cleanChar();
     switch(tmp){
@@ -372,7 +372,7 @@ third_step:
     printf("------------------------------------------------\n");
     renderCards(4,cols,nums,1);
 fourth_step:
-    printf("Action (0 for help):");
+    printf("Action (0 for help): ");
     scanf(" %d",&tmp);
     cleanChar();
     switch(tmp)
@@ -393,17 +393,17 @@ fourth_step:
             printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
             printf("------------------------------------------------\n");
             renderCards(4,cols,nums,1);
-            printf("First card:");
+            printf("First card: ");
             int a, b, c, d;
             scanf("%d", &a);
             cleanChar();
-            printf("Second card:");
+            printf("Second card: ");
             scanf("%d", &b);
             cleanChar();
-            printf("Third card:");
+            printf("Third card: ");
             scanf("%d", &c);
             cleanChar();
-            printf("Fourth card:");
+            printf("Fourth card: ");
             scanf("%d", &d);
             cleanChar();
             if(a == b || a==c || a==d || b==c||b==d||c==d)
@@ -450,7 +450,7 @@ fourth_step:
     }
 
 last_step:
-    printf("Want to play a real game?(0/1)");
+    printf("Want to play a real game?(0/1): ");
     scanf("%d",&tmp);
     cleanChar();
     if(tmp == 1)
