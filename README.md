@@ -21,6 +21,5 @@ make
 to run the tutorial: `./tutorial`\
 to run the game without tutorial: `./game`
 # known issues
-- tutorial is not elegant at all (should be optimized)
-- tutorial does not cover the action cards
 - the `system()` function poses a security vulnerability
+- Some redundant/inefficient code and files exist
