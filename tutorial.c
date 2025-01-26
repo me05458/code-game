@@ -15,452 +15,246 @@ void cleanChar()
 
 int main()
 {
-    int tmp; //for inputs
-    int tracker; //because I'm lazy. Let it be known that this is not a particularly elegant tutorial.
+
     system("clear");
-    printf("------This is the code game tutorial-------\nBy the way, it's called the code game because it's a game about breaking codes, not because it's written in code (although it is).\nThis game involves writing numbers to perform actions. Can you do this? (Type a number, a 1 indicates yes, a 0 indicates no): ");
-    scanf("%d",&tmp);
-    cleanChar();
-    if(tmp == 0) //uh....
-    {
-        printf("uh... okay? You can always play the tutorial again with ./tutorial or the game with ./game\n"); //oops...
-        return 0;
-    }
-    while(tmp != 1) //user can't enter numbers I guess
-    {
-        printf("That's not a valid option. You must type either 0 or 1. Please do so now: ");
-        scanf("%d",&tmp);
-        cleanChar();
-        if(tmp == 0)
-            return 0;
-    }
-    system("clear"); //I know, I know, I'm working on it
-    printf("This is the code. It is your objective to crack it by matching the right cards. To match a card, it must have the same color and one of the numbers shown in the corresponding collumn of the code.\nIn the game, you will be able to select how many numbers there are in each collumn. stars indicate a 'wild card' (more on that later)\n");
-    printf("------------------------------------------------\n");
-    printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE); //yes I just repeat this over and over
-    for(int i = 0; i<3; i++) //wanna do each of the possible numbers
-    {
-        printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-        printf("||  *  ||\n");
+    int tmp = 1;
+    int tmp1 = 1;
 
-    }
-    printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
-    printf("------------------------------------------------\n");
-
-    printf("These are your cards. Each card has a number and color. To win, you must match the numbers and colors of cards to the code.\n");
-    int cols[5] = {RED,YELLOW,GREEN,BLUE,YELLOW}; //this is the "hand"
-    int nums[5] = {1,5,3,5,4}; //note that the drawn card is alreaady in the set
-    renderCards(4,cols,nums,0,0);
-    printf("However, the first action of the game is always to draw a card.\n");
-step_zero:
-    printf("Action (0 will open a menu that tells you of the available actions which vary at different steps): ");
-    scanf(" %d",&tmp);
+    printf("---------------Code Game Reference/tutorial-----------------\n");
+    printf("This tutorial has the following sections:\n"
+        "1 - Table of Contents (aka this)\n"
+        "2 - Introduction\n"
+        "3 - Basic layout\n"
+        "4 - Types of cards\n"
+        "5 - Guessing and examples\n"
+    );
+    printf("This game involves typing numbers to access commands. If you can't do this you're going to have some problems. For the sake of this tutorial, you can type a section number to go to that section, 0 to simply advance to the next step (it will loop back around after the last step). To leave the tutorial type 9. This will always be the key to quit.\n");
+    printf("\nAction: ");
+    scanf(" %d", &tmp1);
     cleanChar();
-    if(tmp == 0)
+    if(tmp1 == 0 && tmp <5)
     {
-        printf("These are the actions you can use:\n0:this list (remember that it varies at different actions)\n1:draw a card (you want this!)\n9:quit\n");
-        goto first_step;
-    }
-    if(tmp == 1)
-    {
-        goto onepointfive_step;
-    }
-    if(tmp == 9)
-    {
-        printf("9 is always the command to quit. Are you sure?(0/1): ");
-        scanf(" %d",&tmp);
-        if(tmp == 0)
-        {
-            goto step_zero;
-        }
-        return 0;
+        tmp++;
     }
     else
     {
-        printf("That is not a valid action, please type 0 to access the help menu.\n");
-    }
-first_step:
-    printf("Action (0 for help):");
-    scanf(" %d",&tmp);
-    cleanChar();
-    switch (tmp){
-        case 0:
-            printf("Available actions:\n0:this list\n1:new card\n9:quit\n");
-            goto first_step;
-        case 1:
-            system("clear");
-            printf("------------------------------------------------\n");
-            printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
-            for(int i = 0; i<3; i++) //wanna do each of the possible numbers
-            {
-                printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-                printf("||  *  ||\n");
-
-            }
-            printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
-            printf("------------------------------------------------\n");
-            renderCards(5,cols, nums,0,0);
-            break;
-        case 9:
-            return 0;
-        default:
-            printf("That is not a valid action.\n");
-            goto first_step;
-    }
-onepointfive_step:
-    system("clear");
-    printf("At this point, you may need to guess a sequence to crack the code and win the game.You can play a card with any number on a code card with stars as long as it's the same color\n");
-    printf("------------------------------------------------\n");
-    printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
-    for(int i = 0; i<3; i++) //wanna do each of the possible numbers
-    {
-        printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-        printf("||  *  ||\n");
-
-    }
-    printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
-    printf("------------------------------------------------\n");
-    renderCards(5,cols,nums,0,0);
-    printf("Unfortunately, you cannot guess the sequence right now. While you do have the right colors, neither card 1 nor 4 have the numbers shown on the yellow puzzle card, however, you are welcome to try.\n");
-    printf("Otherwise you need to discard a card because you can only have 4 cards in your hand at the start of each round.\n");
-    printf("Action (0 for help): ");
-    scanf(" %d",&tmp);
-    cleanChar();
-    if(tmp == 0)
-    {
-            printf("Available actions:\n0:this list\n1:make a guess\n2:discard a card (You want this)\n9:quit\n");
-            goto second_step;
-    }
-    if(tmp == 9)
-    {
-        return 0;
-    }
-    if(tmp == 1)
-    {
-        printf("First card: ");
-        int a, b, c, d;
-        scanf("%d", &a);
-        cleanChar();
-        printf("Second card: ");
-        scanf("%d", &b);
-        cleanChar();
-        printf("Third card: ");
-        scanf("%d", &c);
-        cleanChar();
-        printf("Fourth card: ");
-        scanf("%d", &d);
-        cleanChar();
-        printf("Nope, wrong\n"); //listen, I'm lazy and this isn't a real game. If it should be right, too bad. Something went wrong.
-        goto second_step;
-    }
-    if(tmp == 2)
-    {
-        printf("Type the number of the card you wish to discard (get rid of one of the yellow ones): ");
-        scanf(" %d",&tmp);
-        cleanChar();
-        if(tmp == 4)
+        if(tmp1 == 0)
         {
-            tracker = 1;
-            system("clear");
-            printf("------------------------------------------------\n");
-            printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
-            for(int i = 0; i<3; i++) //wanna do each of the possible numbers
-            {
-                printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-                printf("||  *  ||\n");
-
-            }
-            printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
-            printf("------------------------------------------------\n");
-            renderCards(4,cols,nums,0,0);
-            goto twoptfive_step;
-        }
-        if(tmp == 1)
-        {
-            tracker = 2;
-            cols[1] = GREEN;
-            cols[2] = BLUE;
-            cols[3] = YELLOW;
-            nums[1] = 3;
-            nums[2] = 5;
-            nums[3] = 4;
-            system("clear");
-            printf("------------------------------------------------\n");
-            printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
-            for(int i = 0; i<3; i++) //wanna do each of the possible numbers
-            {
-                printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-                printf("||  *  ||\n");
-
-            }
-            printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
-            printf("------------------------------------------------\n");
-            renderCards(4,cols,nums,0,0);
-            goto twoptfive_step;
+            tmp = 1;
         }
         else
-        { //this is called the illusion of free will :3
-            printf("That card is useful to you, are you sure you want to discard it?(0/1): ");
-            scanf(" %d",&tmp);
-            cleanChar();
-            if(tmp == 0)
-            {
-                goto second_step;
-            }
-            if(tmp == 1)
-            {
-                printf("This tutorial is not a full game and cannot be played as such. Try again.\n");
-                goto second_step;
-            }
-            printf("You have to write a 0 or a 1\n");
-            goto second_step;
+        {
+            tmp = tmp1;
         }
     }
-    else
+    while(tmp != 9)
     {
-        printf("That is not a valid action.\n");
-        goto second_step;
+        system("clear");
+        switch(tmp)
+        {
+            case 1:
+                printf("This tutorial has the following sections:\n"
+                    "1 - Table of Contents (aka this)\n"
+                    "2 - Introduction\n"
+                    "3 - Basic layout\n"
+                    "4 - Types of cards\n"
+                    "5 - Guessing and examples\n"
+                );
+                break;
+            case 2:
+                printf("This is the code game. It's called that becuase it's a game about codes, not because it's written in code (even though it is). The objective is to crack the code by matching cards by color and number to a given code. The game is played in turns. \n\nEach turn has the following steps:\n"
+                "1: Draw a card. You always draw a card first, even if you can already guess the code.\n"
+                "2: Play an action card. This step is omitted if there are no action cards. You can only play one action card per turn.\n"
+                "3: Guess a sequence\n"
+                "4: Discard cards down to 4. You can only have 4 cards in your hand at the start of each round. Also note that discarding cards is one step. Once you start discarding you may not guess.\n"
+                "If you need help, type 0. It will display all available commands at any given step. Not all commands are always available at all times due to the step-based nature of the game.       \n"
+                    "\nThe commands for the actions are as follows:\n"
+                    "0: Help (view available commands)\n"
+                    "1: Draw a card\n"
+                    "2: Make a guess\n"
+                    "3: Discard\n"
+                    "4: Use an action card\n"
+                    "9: Quit\n"
+                );
+                break;
 
-    }
-
-second_step:
-    printf("Action (0 for help):");
-    scanf(" %d",&tmp);
-    cleanChar();
-    switch(tmp){
-        case 0:
-            printf("Available actions:\n0:this list\n1:make a guess\n2:discard a card\n9:quit\n");
-            goto second_step;
-        case 1:
-            printf("First card: ");
-            int a, b, c, d;
-            scanf("%d", &a);
-            cleanChar();
-            printf("Second card: ");
-            scanf("%d", &b);
-            cleanChar();
-            printf("Third card: ");
-            scanf("%d", &c);
-            cleanChar();
-            printf("Fourth card: ");
-            scanf("%d", &d);
-            cleanChar();
-            printf("Nope, wrong"); //listen, I'm lazy and this isn't a real game. If it should be right, too bad. Something went wrong.
-            goto second_step;
-        case 2:
-            printf("Type the number of the card you wish to discard (get rid of one of the yellow ones): ");
-            scanf(" %d",&tmp);
-            cleanChar();
-            if(tmp == 4)
-            {
-                tracker = 1;
+            case 3:
                 system("clear");
+                printf("This is what the game set up looks like:\n\n");
+                printf("Turns: %d\tStep: %d\n",0,1);
                 printf("------------------------------------------------\n");
-                printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
+                printf("\e[0m\e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||  \e[0m\n",RED, YELLOW,GREEN,BLUE);
                 for(int i = 0; i<3; i++) //wanna do each of the possible numbers
                 {
-                    printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-                    printf("||  *  ||\n");
+                    printf("\e[0m\e[%d;1m||  %d  ||    \e[%d;1m||  %d  ||    \e[%d;1m||  %d  ||    \e[%d;1m",RED, i, YELLOW, i, GREEN, i, BLUE);
+                    printf("||  %d  || \e[0m\n", i);
 
                 }
-                printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
+                printf("\e[0m\e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||  \e[0m\n",RED, YELLOW,GREEN,BLUE);
                 printf("------------------------------------------------\n");
-                renderCards(4,cols,nums,0,0);
-                goto twoptfive_step;
-            }
-            if(tmp == 1)
-            {
-                tracker = 2;
-                cols[1] = GREEN;
-                cols[2] = BLUE;
-                cols[3] = YELLOW;
-                nums[1] = 3;
-                nums[2] = 5;
-                nums[3] = 4;
+                for(int i = 0; i<4; i++)
+                {
+                    printf("\e[0m      %d        ", i);
+                }
+                printf("\n");
+                printf("\e[0m\e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||    \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\e[%d;1m||    5    ||  \e[%d;1m||    2    ||  \e[%d;1m||    0    ||  \e[%d;1m||    3    ||   \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\e[0m\e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||    \e[0m\n\n",BLUE,GREEN,YELLOW,RED);
+
+                printf("Action (0 for help): \n");
+
+                printf("\nWould you like to see an explanation of the parts?(0/1): ");
+                scanf(" %d",&tmp1);
+                cleanChar();
+                if(tmp1 != 1)
+                {
+                    system("clear");
+                    break;
+                }
+
                 system("clear");
-                printf("------------------------------------------------\n");
-                printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
+                printf("*************************\n");
+                printf("* Turns: %d\tStep: %d *\n",0,1);
+                printf("*************************");
+                printf(" <------- This keeps track of the turn and step you are on\n");
+                printf("\n");
+                printf("****************************************************\n");
+                printf("* ------------------------------------------------ *\n");
+                printf("\e[0m* \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||  \e[0m*\n",RED, YELLOW,GREEN,BLUE);
                 for(int i = 0; i<3; i++) //wanna do each of the possible numbers
                 {
-                    printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-                    printf("||  *  ||\n");
+                    printf("\e[0m* \e[%d;1m||  %d  ||    \e[%d;1m||  %d  ||    \e[%d;1m||  %d  ||    \e[%d;1m",RED, i, YELLOW, i, GREEN, i, BLUE);
+                        printf("||  %d  || \e[0m*\n", i);
 
                 }
-                printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
-                printf("------------------------------------------------\n");
-                renderCards(4,cols,nums,0,0);
-                goto twoptfive_step;
+                printf("\e[0m* \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||  \e[0m*\n",RED, YELLOW,GREEN,BLUE);
+                printf("* ------------------------------------------------ *\n");
+                printf("****************************************************");
+                printf(" <------- This is your code. In order for a card to match, it must have the same color as one of the collumns, and one of the numbers in the collumn.\n");
+                printf("\n");
+                printf("****************************************************************\n");
+                printf("* ");
+                for(int i = 0; i<4; i++)
+                {
+                    printf("\e[0m      %d        ", i);
+                }
+                printf(" *\n");
+                printf("****************************************************************");
+                printf(" <------- These are your card numbers. Whenever you work with your cards, you will use these numbers to refer to them.\n");
+                printf("\n****************************************************************\n");
+
+                printf("\e[0m* \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||    \e[0m*\n",BLUE,GREEN,YELLOW,RED);
+                printf("* \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m*\n",BLUE,GREEN,YELLOW,RED);
+                printf("* \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m*\n",BLUE,GREEN,YELLOW,RED);
+                printf("* \e[%d;1m||    5    ||  \e[%d;1m||    2    ||  \e[%d;1m||    0    ||  \e[%d;1m||    3    ||   \e[0m*\n",BLUE,GREEN,YELLOW,RED);
+                printf("* \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m*\n",BLUE,GREEN,YELLOW,RED);
+                printf("* \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m*\n",BLUE,GREEN,YELLOW,RED);
+                printf("\e[0m* \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||    \e[0m*\n",BLUE,GREEN,YELLOW,RED);
+                printf("****************************************************************");
+                printf(" <------- These are the cards in your hand. You want to match them to the code.\n\n");
+
+                printf("************************\n");
+                printf("* Action (0 for help): *\n");
+                printf("************************");
+                printf(" <------- This is the prompt where you type commands\n");
+                break;
+
+            case 4:
+                printf("The following types of cards exist:\n\n");
+                printf("Normal card:\nMost cards are this way. It has a number and a color that can be matched.\n");
+                printf(" \e[%d;1m||||||||||| \n"
+                        "||         ||  \n"
+                        "||         ||  \n"
+                        "||    1    ||  \n"
+                        "||         ||  \n"
+                        "||         ||  \n"
+                        " ||||||||||| \e[0m\n\n",BLUE);
+                printf("Wild card:\nThis card can be used as a card of any color and number. It can be matched on anything.\n");
+                printf(" \e[%d;1m|||||\e[%d;1m|||||| \n"
+                "\e[%d;1m||         \e[%d;1m||  \n"
+                "\e[%d;1m||         \e[%d;1m||  \n"
+                "\e[%d;1m||   \e[0many   \e[%d;1m||  \n"
+                "\e[%d;1m||         \e[%d;1m||  \n"
+                "\e[%d;1m||         \e[%d;1m||  \n"
+                " \e[%d;1m||||||\e[%d;1m||||| \e[0m\n\n",RED,YELLOW,RED,YELLOW,RED,YELLOW,RED,GREEN,BLUE,GREEN,BLUE,GREEN,BLUE,GREEN,BLUE,GREEN);
+                printf("Action card:\nThis card is used to draw two cards. It cannot be used for guessing and only one can be used per turn.\n");
+                printf(" \e[%d;1m||||||||||| \n"
+                "||         ||  \n"
+                "||         ||  \n"
+                "||  add 2  ||  \n"
+                "||         ||  \n"
+                "||         ||  \n"
+                " ||||||||||| \e[0m\n",0);
+                break;
+
+            case 5:
+                printf(" \e[%d;1m|||||||\n",GREEN);
+                for(int i = 0; i<3; i++)
+                {
+                    printf("||  *  ||\n");
+                }
+                printf(" |||||||\e[0m\n");
+                printf("NOTE: if part of the code looks like the thing depicted above, any number can be matched with it\n\n");
+                printf("To match a card, it must have the same color as the code and one of the numbers of the code. For instance:\n");
+                printf("\e[0m    MATCH           |         NOT MATCH         |         NOT MATCH         |           MATCH           |         NOT MATCH\n");
+                printf("\e[0m                    |                           |                           |                           |\n");
+
+            printf(" \e[%d;1m  |||||||          \e[0m|          \e[%d;1m|||||||          \e[0m|          \e[%d;1m|||||||          \e[0m|          \e[%d;1m|||||||          \e[0m|          \e[%d;1m||||||| \n"
+                   "\e[%d;1m  ||  0  ||         \e[0m|         \e[%d;1m||  0  ||         \e[0m|         \e[%d;1m||  0  ||         \e[0m|         \e[%d;1m||  *  ||         \e[0m|         \e[%d;1m||  *  ||\n"
+                   "\e[%d;1m  ||  3  ||         \e[0m|         \e[%d;1m||  3  ||         \e[0m|         \e[%d;1m||  3  ||         \e[0m|         \e[%d;1m||  *  ||         \e[0m|         \e[%d;1m||  *  || \n"
+                   "\e[%d;1m  ||  5  ||         \e[0m|         \e[%d;1m||  5  ||         \e[0m|         \e[%d;1m||  5  ||         \e[0m|         \e[%d;1m||  *  ||         \e[0m|         \e[%d;1m||  *  || \n"
+                   " \e[%d;1m  |||||||          \e[0m|          \e[%d;1m|||||||          \e[0m|          \e[%d;1m|||||||          \e[0m|          \e[%d;1m|||||||          \e[0m|          \e[%d;1m||||||| \n",
+                    GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN,GREEN);
+            printf("\e[0m                    |                           |                           |                           |\n");
+            printf(" \e[%d;1m|||||||||||        \e[0m|        \e[%d;1m|||||||||||        \e[0m|        \e[%d;1m|||||||||||        \e[0m|        \e[%d;1m|||||||||||        \e[0m|        \e[%d;1m|||||||||||\n"
+                   "\e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||\n"
+                   "\e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||\n"
+                   "\e[%d;1m||    3    ||       \e[0m|       \e[%d;1m||    2    ||       \e[0m|       \e[%d;1m||    3    ||       \e[0m|       \e[%d;1m||    2    ||       \e[0m|       \e[%d;1m||    2    ||\n"
+                   "\e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||\n"
+                   "\e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||       \e[0m|       \e[%d;1m||         ||\n"
+                   " \e[%d;1m|||||||||||        \e[0m|        \e[%d;1m|||||||||||       \e[0m |        \e[%d;1m|||||||||||       \e[0m |        \e[%d;1m|||||||||||       \e[0m |        \e[%d;1m|||||||||||\e[0m\n",
+                GREEN,GREEN,YELLOW,GREEN,YELLOW,GREEN,GREEN,YELLOW,GREEN,YELLOW,GREEN,GREEN,YELLOW,GREEN,YELLOW,GREEN,GREEN,YELLOW,GREEN,YELLOW,GREEN,GREEN,YELLOW,GREEN,YELLOW,GREEN,GREEN,YELLOW,GREEN,YELLOW,GREEN,GREEN,YELLOW,GREEN,YELLOW);
+            break;
+
+
+            default:
+                printf("That is not a valid number.\n");
+                break;
+
+
+
+
+
+
+        }
+
+        printf("\nAction: ");
+        scanf(" %d", &tmp1);
+        cleanChar();
+        if(tmp1 == 0 && tmp <5)
+        {
+            tmp++;
+        }
+        else
+        {
+            if(tmp1 == 0)
+            {
+                tmp = 1;
             }
             else
-            { //this is called the illusion of free will :3
-                printf("That card is useful to you, are you sure you want to discard it?(0/1): \n");
-                scanf(" %d",&tmp);
-                cleanChar();
-                if(tmp == 0)
-                {
-                    goto second_step;
-                }
-                if(tmp == 1)
-                {
-                    printf("This tutorial is not a full game and cannot be played as such. Try again.\n"); //I'm lazy'
-                    goto second_step;
-                }
-                printf("You have to write a 0 or a 1\n");
-                goto second_step;
-            }
-        case 9:
-            return 0;
-        default:
-            printf("That is not a valid action.\n");
-            goto second_step;
-    }
-twoptfive_step:
-    system("clear");
-    printf("It is now the begining of the second round! You know what to do\n");
-    printf("------------------------------------------------\n");
-    printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
-    for(int i = 0; i<3; i++) //wanna do each of the possible numbers
-    {
-        printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-        printf("||  *  ||\n");
-
-    }
-    printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
-    printf("------------------------------------------------\n");
-    renderCards(4,cols,nums,0,0);
-third_step:
-    printf("Action (0 for help): ");
-    scanf(" %d",&tmp);
-    cleanChar();
-    switch(tmp){
-        case 0:
-            printf("Available actions:\n0:this list\n1:new card\n9:quit\n");
-            goto third_step;
-        case 1:
-            system("clear");
-            printf("------------------------------------------------\n");
-            printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
-            for(int i = 0; i<3; i++) //wanna do each of the possible numbers
             {
-                printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-                printf("||  *  ||\n");
-
+                tmp = tmp1;
             }
-            printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
-            printf("------------------------------------------------\n");
-            renderCards(4,cols,nums,1,0);
-            printf("Congradulations! You drew a wild card! This kind of card can be considered as any color and any number.\n");
-            goto fourth_step;
-        case 9:
-            return 0;
-        default:
-            printf("That is not a valid action\n");
-            goto third_step;
+        }
     }
 
-    system("clear");
-    printf("It's time to guess again. You can win this time!\n");
-    printf("------------------------------------------------\n");
-    printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
-    for(int i = 0; i<3; i++) //wanna do each of the possible numbers
-    {
-        printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-        printf("||  *  ||\n");
 
-    }
-    printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
-    printf("------------------------------------------------\n");
-    renderCards(4,cols,nums,1,0);
-fourth_step:
-    printf("Action (0 for help): ");
-    scanf(" %d",&tmp);
-    cleanChar();
-    switch(tmp)
-    {
-        case 0:
-            printf("Available actions:\n0:this list\n1:make a guess (You want this now)\n2:discard a card\n9:quit\n");
-            goto fourth_step;
-        case 1:
-            system("clear");
-            printf("------------------------------------------------\n");
-            printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n",RED, YELLOW,GREEN,BLUE);
-            for(int i = 0; i<3; i++) //wanna do each of the possible numbers
-            {
-                printf("\e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm||  %d  ||    \e[%dm",RED, i+1, YELLOW, i+1, GREEN,i+1, BLUE);
-                printf("||  *  ||\n");
+    printf("To view the tutorial again run './tutorial'. To play the game run './game'\n\e[0m");
 
-            }
-            printf("\e[%dm |||||||     \e[%dm |||||||     \e[%dm |||||||     \e[%dm ||||||| \n\e[0m",RED, YELLOW,GREEN,BLUE);
-            printf("------------------------------------------------\n");
-            renderCards(4,cols,nums,1,0);
-            printf("First card: ");
-            int a, b, c, d;
-            scanf("%d", &a);
-            cleanChar();
-            printf("Second card: ");
-            scanf("%d", &b);
-            cleanChar();
-            printf("Third card: ");
-            scanf("%d", &c);
-            cleanChar();
-            printf("Fourth card: ");
-            scanf("%d", &d);
-            cleanChar();
-            if(a == b || a==c || a==d || b==c||b==d||c==d)
-            {
-                printf("You can't guess one card twice\n");
-                goto fourth_step;
-            }
-            if(tracker == 1) //discarded 4
-            {
-                if(a == 0 && b == 4 && c == 2 && d == 3)
-                {
-                    printf("You guessed it!\n");
-                    goto last_step;
-                }
-                else
-                {
-                    printf("Nope, wrong. (Maybe check the order)\n");
-                    goto fourth_step;
-                }
-            }
-            if(tracker == 2) //discarded 1
-            {
-                if(a == 0 && b == 4 && c == 1 && d == 2)
-                {
-                    printf("You guessed it!\n");
-                    goto last_step;
-                }
-                else
-                {
-                    printf("Nope, wrong. (Maybe check the order)\n");
-                    goto fourth_step;
-                }
-            }
-            goto last_step;
-        case 2:
-            printf("This tutorial is not a full game and will not be played as such. Keep guessing until you get it.\n");
-            goto fourth_step;
-        case 9:
-            return 0;
-        default:
-            printf("That is not a valid action\n");
-            goto fourth_step;
 
-    }
-
-last_step:
-    printf("Want to play a real game?(0/1): ");
-    scanf("%d",&tmp);
-    cleanChar();
-    if(tmp == 1)
-    {
-        char *args[]={"./game",NULL};
-        execv(args[0],args);
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
+    return 0;
 }

@@ -8,10 +8,8 @@
 //global variables:
 int colStore[4];
 int handcol[9];
-int handnum[9];
+int handnum[9]; //number  = -1 means wold card, -2 means action card
 int cardnum = 0;
-int wildnum = 0;
-int drawnum = 0;
 int tmp;
 int turns = 0;
 int step = 0;
@@ -44,26 +42,29 @@ void sort(int arraySize, int* array)
 	}
 }
 
+
 int draw() //returns:
 			//1 - regular card, proceed to discard/guess
 			//2 - action card! proceed to action card
 {
+	cardnum++; //wow more cards now
 	int something = randombytes_uniform(10);
-	if(something == 7) //1 in 10 chance of wild card
+	if(something == 7) //1 in 10 chance of draw card
 	{
-		wildnum++; //wow more wildcards
+		handcol[cardnum -1] = 0;
+		handnum[cardnum -1] = -2;
 		renderBar(tmp,p1,p2,p3,p4,turns,step); //draw
-		renderCards(cardnum,handcol,handnum,wildnum,drawnum);
+		renderCards(cardnum,handcol,handnum);
 		return 1;
 	}
-	if(something ==4) //1 in 10 chance of draw card
+	if(something ==4) //1 in 10 chance of wild card
 	{
-		drawnum++;
+		handcol[cardnum -1] = 0;
+		handnum[cardnum -1] = -1;
 		renderBar(tmp, p1,p2,p3,p4,turns,step);
-		renderCards(cardnum,handcol,handnum,wildnum,drawnum);
+		renderCards(cardnum,handcol,handnum);
 		return 2;
 	}
-	cardnum++; //wow, more cards now
 	if(cardnum>9) //oh no too many cards why?
 	{
 		printf("Something mildly bad happened (EXIT CODE 3)\n");
@@ -73,16 +74,16 @@ int draw() //returns:
 	handcol[cardnum -1] = colStore[randombytes_uniform(4)];
 	handnum[cardnum -1] = randombytes_uniform(6);
 	renderBar(tmp, p1, p2, p3, p4,turns,step); //draw
-	renderCards(cardnum, handcol, handnum,wildnum,drawnum);
+	renderCards(cardnum, handcol, handnum);
 	return 1;
 }
 int guess() //returns:
 			//1 - Did not guess it
 			//2 - guessed it
-			//0 - user wants to quit!
+			//0 - user wants to quit! (after guessing it)
 {
 	renderBar(tmp,p1,p2,p3,p4,turns,step);
-	renderCards(cardnum, handcol, handnum,wildnum,drawnum);
+	renderCards(cardnum, handcol, handnum);
 	//painstakingly gather guesses
 	printf("First card: ");
 	int a, b, c, d;
@@ -104,62 +105,14 @@ int guess() //returns:
 		return 1;
 	}
 	int ch1, ch2, ch3, ch4;
-	if(a >= cardnum)
+	if(a >= cardnum || b >=cardnum || c >= cardnum || d>=cardnum)
 	{
-		if(cardnum+wildnum <= a) {
-			printf("Not a valid card!\n");
-			return 1;
-		}
-		else
-		{
-			ch1 = TRUE;
-		}
+		printf("Not a valid card!\n");
 	}
-	else{
-		ch1 = compareCard(p1,tmp,handcol[a],handnum[a]);
-	}
-	if(b >= cardnum)
-	{
-		if(cardnum+wildnum <= b) {
-			printf("Not a valid card!\n");
-			return 1;
-		}
-		else
-		{
-			ch2 = TRUE;
-		}
-	}
-	else{
-		ch2 = compareCard(p2,tmp,handcol[b],handnum[b]);
-	}
-	if(c >= cardnum)
-	{
-		if(cardnum+wildnum <= c) {
-			printf("Not a valid card!\n");
-			return 1;
-		}
-		else
-		{
-			ch3 = TRUE;
-		}
-	}
-	else{
-		ch3 = compareCard(p3,tmp,handcol[c],handnum[c]);
-	}
-	if(d >= cardnum)
-	{
-		if(cardnum+wildnum <= d) {
-			printf("Not a valid card!\n");
-			return 1;
-		}
-		else
-		{
-			ch4 = TRUE;
-		}
-	}
-	else{
-		ch4 = compareCard(p4,tmp,handcol[d],handnum[d]);
-	}
+	ch1 = compareCard(p1,tmp,handcol[a],handnum[a]);
+	ch2 = compareCard(p2,tmp,handcol[b],handnum[b]);
+	ch3 = compareCard(p3,tmp,handcol[c],handnum[c]);
+	ch4 = compareCard(p4,tmp,handcol[d],handnum[d]);
 	if(ch1 == 1 && ch2 == 1 && ch3 == 1 && ch4 == 1)
 	{
 		if(turns == 1)
@@ -183,29 +136,15 @@ int discard() //returns:
 				//0 - all is fine
 {
 	renderBar(tmp,p1,p2,p3,p4,turns,step);
-	renderCards(cardnum, handcol, handnum,wildnum,drawnum);
-	printf("Type a number: ");//which one?
+	renderCards(cardnum, handcol, handnum);
+	printf("Card to discard: ");//which one?
 	int store; //we put numbers in here
 	scanf("%d",&store);
 	cleanChar();
-	if(store >= cardnum+wildnum+drawnum||store<0) //what? Nonsense!
+	if(store >= cardnum||store<0) //what? Nonsense!
 	{
 		printf("Not a valid card\n");
 		return 1; //make em do it again
-	}
-	if(store >= cardnum+wildnum) //it's a draw card
-	{
-		drawnum--;
-		renderBar(tmp,p1,p2,p3,p4,turns,step);
-		renderCards(cardnum, handcol, handnum,wildnum,drawnum);
-		return 0;
-	}
-	if(store >= cardnum)
-	{
-		wildnum--;
-		renderBar(tmp,p1,p2,p3,p4,turns,step);
-		renderCards(cardnum, handcol, handnum,wildnum,drawnum);
-		return 0;
 	}
 	if(store == cardnum-1){ //last card, nice!
 		cardnum--; //just remove one of everything
@@ -226,7 +165,39 @@ int discard() //returns:
 	}
 	//draw
 	renderBar(tmp,p1,p2,p3,p4,turns,step);
-	renderCards(cardnum, handcol, handnum,wildnum,drawnum);
+	renderCards(cardnum, handcol, handnum);
+	return 0; //okay done
+}
+int discardGiven(int card) //returns:
+//1 - not valid return
+//0 - all is fine
+{
+	renderBar(tmp,p1,p2,p3,p4,turns,step);
+	renderCards(cardnum, handcol, handnum);
+	if(card >= cardnum||card<0) //what? Nonsense!
+	{
+		return 1; //make em do it again
+	}
+	if(card == cardnum-1){ //last card, nice!
+		cardnum--; //just remove one of everything
+		handnum[card] = -1;
+		handcol[card] = -1;
+	}
+	else //dang it, not last card
+	{
+		cardnum--; //less cards now
+		for(int i = card; i<cardnum; i++)
+		{//scoot all cards along
+			handnum[i] = handnum[i+1];
+			handcol[i] = handcol[i+1];
+		}
+		//kill the (now redundant) last one
+		handnum[cardnum+1] = -1;
+		handcol[cardnum+1] = -1;
+	}
+	//draw
+	renderBar(tmp,p1,p2,p3,p4,turns,step);
+	renderCards(cardnum, handcol, handnum);
 	return 0; //okay done
 }
 
@@ -246,7 +217,6 @@ int main()
 		return 2;
 	}
 	randombytes_buf(randString, 32);
-	//	int t = randombytes_uniform(10);
 	//this guy's gonna be the number of difficulty used
 	tmp = -1;
 	while(tmp <=0) //make user give number
@@ -269,7 +239,6 @@ int main()
 		step = 0;
 		turns = 0;
 		cardnum = 4; //cards in hand
-		wildnum = 0;
 		for(int i = 0; i<cardnum; i++)//random initial hand
 		{
 			handcol[i] = colStore[randombytes_uniform(4)];
@@ -373,7 +342,7 @@ int main()
 		{
 			step = 1;
 			renderBar(tmp, p1, p2, p3, p4, turns,step);
-			renderCards(cardnum, handcol, handnum,wildnum,drawnum);
+			renderCards(cardnum, handcol, handnum);
 			int tmp1 = 0; //I'm gonna put characters in here
 first_step: //part when user says to draw card
 			printf("Action (0 for help): ");
@@ -382,13 +351,26 @@ first_step: //part when user says to draw card
 			switch (tmp1) {
 				case 0: //help
 					renderBar(tmp,p1,p2,p3,p4,turns,step);
-					renderCards(cardnum, handcol, handnum,wildnum,drawnum);
-					printf("Available actions:\n0:this list\n1:new card\n9:quit\n");
+					renderCards(cardnum, handcol, handnum);
+					printf("Available actions:\n\e[0m0:this list\n1:new card\n\e[30;1m2:use action card [UNAVAILABLE]\n\e[30;1m3:make a guess [UNAVIALABLE]\n\e[30;1m4:discard [UNAVAILABLE]\n\e[0m9:quit\n");
 					goto first_step;
 				case 1: //draw card
+					renderBar(tmp,p1,p2,p3,p4,turns,step);
+					renderCards(cardnum, handcol, handnum);
 					tmp1 = draw();
-					if(drawnum >0)
-						goto onepttwo_step;
+					for(int i = 0; i<cardnum; i++)
+					{
+						if(handnum[i] == -2)
+						{
+							step = 2;
+							renderBar(tmp,p1,p2,p3,p4,turns,step);
+							renderCards(cardnum, handcol, handnum);
+							goto onepttwo_step;
+						}
+					}
+					step = 3;
+					renderBar(tmp,p1,p2,p3,p4,turns,step);
+					renderCards(cardnum, handcol, handnum);
 					goto second_step; //otherwise it's normal
 				case 9: //quit
 					return 0;
@@ -396,18 +378,20 @@ first_step: //part when user says to draw card
 					printf("That is not a valid action.\n");
 					goto first_step;
 			}
-			step = 2;
 onepttwo_step: //you can only do this once! (I could've written it without the goto onepttwo_step but it's neater this way)
+	step = 2;
 	printf("Action (0 for help): ");
 	scanf(" %d",&tmp1);
 	cleanChar();
 	switch(tmp1){
 		case 0: //help
 			renderBar(tmp,p1,p2,p3,p4,turns,step);
-			renderCards(cardnum, handcol, handnum,wildnum,drawnum);
-			printf("Available actions:\n0:this list\n2:make a guess\n3:discard\n4:use action card\n9:quit\n");
+			renderCards(cardnum, handcol, handnum);
+			printf("\e[0mAvailable actions:\n0:this list\n\e[30;1m1:new card [UNAVAILABLE]\n\e[0m2:use action card\n3:make a guess\n4:discard\n9:quit\n");
 			goto onepttwo_step;
-		case 2: // make a guess
+		case 3: // make a guess
+			renderBar(tmp,p1,p2,p3,p4,turns,step);
+			renderCards(cardnum, handcol, handnum);
 			tmp1 = guess();
 			if(tmp1 == 0)
 				return 0;
@@ -417,25 +401,48 @@ onepttwo_step: //you can only do this once! (I could've written it without the g
 				goto last_step;
 			}
 			goto second_step;
-		case 3: // discard
+		case 4: // discard
+			step = 4;
+			renderBar(tmp,p1,p2,p3,p4,turns,step);
+			renderCards(cardnum, handcol, handnum);
 			tmp1 = discard();
 			if(tmp1 == 1)
-				goto second_step;
-			if(cardnum+wildnum+drawnum > 4)
 			{
+				step = 3;
+				renderBar(tmp,p1,p2,p3,p4,turns,step);
+				renderCards(cardnum, handcol, handnum);
+				goto second_step;
+			}
+			if(cardnum > 4)
+			{
+				step = 4;
+				renderBar(tmp,p1,p2,p3,p4,turns,step);
+				renderCards(cardnum, handcol, handnum);
 				goto third_step;
 			}
 			goto last_step;
-		case 4: //use action card
-			step = 2;
+		case 2: //use action card
 			renderBar(tmp,p1,p2,p3,p4,turns,step);
-			renderCards(cardnum, handcol, handnum,wildnum,drawnum);
-			printf("Type a number: ");
+			renderCards(cardnum, handcol, handnum);
+			printf("Card to use: ");
 			scanf(" %d",&tmp1);
 			cleanChar();
-			drawnum--;
+			if(handnum[tmp1]!=-2)
+			{
+				printf("That is not a valid action card.\n");
+				goto onepttwo_step;
+			}
+			int test = discardGiven(tmp1);
+			if(test == 1)
+			{
+				printf("Something went mildly wrong please try again\n");
+				goto onepttwo_step;
+			}
 			draw();
 			draw();
+			step = 3;
+			renderBar(tmp,p1,p2,p3,p4,turns,step);
+			renderCards(cardnum, handcol, handnum);
 			goto second_step;
 		case 9: //quit
 			return 0;
@@ -451,10 +458,12 @@ second_step: //user gueses or discards
 			switch(tmp1){
 				case 0: //help
 					renderBar(tmp,p1,p2,p3,p4,turns,step);
-					renderCards(cardnum, handcol, handnum,wildnum,drawnum);
-					printf("Available actions:\n0:this list\n2:make a guess\n3:discard\n9:quit\n");
+					renderCards(cardnum, handcol, handnum);
+					printf("\e[0mAvailable actions:\n0:this list\n\e[30;1m1:new card [UNAVAILABLE]\n2:use action card [UNAVAILABLE]\n\e[0m3:make a guess\n4:discard\n9:quit\n");
 					goto second_step;
-				case 2://guess
+				case 3://guess
+					renderBar(tmp,p1,p2,p3,p4,turns,step);
+					renderCards(cardnum, handcol, handnum);
 					tmp1 = guess();
 					if(tmp1 == 0)
 						return 0;
@@ -464,13 +473,18 @@ second_step: //user gueses or discards
 						goto last_step;
 					}
 					goto second_step;
-				case 3: //discard
+				case 4: //discard
 					step = 4;
+					renderBar(tmp,p1,p2,p3,p4,turns,step);
+					renderCards(cardnum, handcol, handnum);
 					tmp1 = discard();
 					if(tmp1 == 1)
 						goto second_step;
-					if(cardnum+wildnum+drawnum > 4)
+					if(cardnum > 4)
 					{
+						step = 4;
+						renderBar(tmp,p1,p2,p3,p4,turns,step);
+						renderCards(cardnum, handcol, handnum);
 						goto third_step;
 					}
 					goto last_step;
@@ -482,30 +496,14 @@ second_step: //user gueses or discards
 			}
 third_step:
 			step = 4;
-			printf("Action (0 for help): ");
-			scanf(" %d",&tmp1);
-			cleanChar();
-			switch(tmp1){
-				case 0: //help
-					renderBar(tmp,p1,p2,p3,p4,turns,step);
-					renderCards(cardnum, handcol, handnum,wildnum,drawnum);
-					printf("Available actions:\n0:this list\n3:discard\n9:quit\n");
-					goto third_step;
-				case 3://discard
-					tmp1 = discard();
-					if(tmp1 == 1)
-						goto third_step;
-					if(cardnum+wildnum+drawnum > 4)
-					{
-						goto third_step;
-					}
-					goto last_step;
-				case 9:
-					return 0; //quit
-				default: //weird
-					printf("That is not a valid action.\n");
-					goto third_step;;
+			tmp1 = discard();
+			if(tmp1 == 1)
+				goto third_step;
+			if(cardnum > 4)
+			{
+				goto third_step;
 			}
+			goto last_step;
 
 last_step: // just the end
 	turns++;
