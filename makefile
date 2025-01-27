@@ -25,11 +25,11 @@ $(LINK_TARGET): $(OBJS) tutorial.o
 	gcc -o $@ -c $<
 
 
-game.o : game.h cards.h bar.h
+game.o : cards.h bar.h
 cards.o : cards.h
 bar.o : bar.h
 pieces.o : pieces.h
-tutorial.o : tutorial.h cards.h
+tutorial.o : cards.h
 
 clean:
 	rm -f $(REBUILDABLES)
