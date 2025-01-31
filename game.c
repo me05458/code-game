@@ -7,7 +7,7 @@
 
 //global variables:
 int colStore[4];
-int handcol[9];
+int handcol[9]; //0 means any color or action card
 int handnum[9]; //number  = -1 means wold card, -2 means action card
 int cardnum = 0;
 int tmp;
@@ -48,8 +48,8 @@ int draw() //returns:
 			//2 - action card! proceed to action card
 {
 	cardnum++; //wow more cards now
-	int something = randombytes_uniform(10);
-	if(something == 7) //1 in 10 chance of draw card
+	int something = randombytes_uniform(20);
+	if(something == 7) //1 in 20 chance of draw card
 	{
 		handcol[cardnum -1] = 0;
 		handnum[cardnum -1] = -2;
@@ -57,7 +57,21 @@ int draw() //returns:
 		renderCards(cardnum,handcol,handnum);
 		return 1;
 	}
-	if(something ==4) //1 in 10 chance of wild card
+	//if(something == 6) //1 in 20 chance of only number wild card
+	{
+		handcol[cardnum -1] = colStore[randombytes_uniform(4)];
+		handnum[cardnum -1] = -1;
+		renderCards(cardnum,handcol,handnum);
+		return 1;
+	}
+	if(something == 3) //1 in 20 chance of only color wild card
+	{
+		handcol[cardnum -1] = 0;
+		handnum[cardnum -1] = randombytes_uniform(6);
+		renderCards(cardnum,handcol,handnum);
+		return 1;
+	}
+	if(something ==4) //1 in 20 chance of wild card
 	{
 		handcol[cardnum -1] = 0;
 		handnum[cardnum -1] = -1;

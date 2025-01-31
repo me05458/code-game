@@ -2,10 +2,6 @@
 #include <stdlib.h>
 #include "cards.h"
 #include "pieces.h"
-#define RED 31
-#define YELLOW 33
-#define GREEN 32
-#define BLUE 36
 
 // ||||||||||| //red
 //||         ||
@@ -387,7 +383,7 @@ void renderBar(int tmp, puzzlePiece p1, puzzlePiece p2, puzzlePiece p3, puzzlePi
 					printf("||  *  ||\n");
 					break;
 				case YELLOW:
-					printf("::  *  ::]\n[");
+					printf("::  *  ::]\n");
 					break;
 				case BLUE:
 					printf("[]  *  []\n");

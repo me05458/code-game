@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include "cards.h"
-#define RED 31
-#define YELLOW 33
-#define GREEN 32
-#define BLUE 36
+#include "pieces.h"
 
 // ||||||||||| 
 //||         ||
@@ -43,7 +40,14 @@ void renderCards(int cards, int* cols, int* nums)
 		switch(nums[i])
 		{
 			case -1:
-				printf("\e[%d;1m ||||||\e[%d;1m|||||   ",RED, YELLOW);
+				if(cols[i] == 0)
+				{
+					printf("\e[%d;1m ||||||\e[%d;1m|||||   ",RED, YELLOW);
+				}
+				else
+				{
+					printf("\e[%d;1m |||||||||||   ",cols[i]);
+				}
 				break;
 
 			case -2:
@@ -51,7 +55,14 @@ void renderCards(int cards, int* cols, int* nums)
 				break;
 
 			default:
-				printf("\e[%d;1m |||||||||||   ",cols[i]);
+				if(cols[i] == 0)
+				{
+					printf("\e[%d;1m ||||||\e[%d;1m|||||   ",RED, YELLOW);
+				}
+				else
+				{
+					printf("\e[%d;1m |||||||||||   ",cols[i]);
+				}
 				break;
 		}
 	}
@@ -63,7 +74,14 @@ void renderCards(int cards, int* cols, int* nums)
 			switch(nums[j])
 			{
 				case -1:
-					printf("\e[%d;1m||         \e[%d;1m||  ",RED,YELLOW);
+					if(cols[j] == 0)
+					{
+						printf("\e[%d;1m||         \e[%d;1m||  ",RED,YELLOW);
+					}
+					else
+					{
+						printf("\e[%d;1m||         ||  ",cols[j]);
+					}
 					break;
 
 				case -2:
@@ -71,7 +89,14 @@ void renderCards(int cards, int* cols, int* nums)
 					break;
 
 				default:
-					printf("\e[%d;1m||         ||  ",cols[j]);
+					if(cols[j] == 0)
+					{
+						printf("\e[%d;1m||         \e[%d;1m||  ",RED,YELLOW);
+					}
+					else
+					{
+						printf("\e[%d;1m||         ||  ",cols[j]);
+					}
 					break;
 			}
 		}
@@ -82,7 +107,14 @@ void renderCards(int cards, int* cols, int* nums)
 		switch(nums[i])
 		{
 			case -1:
-				printf("\e[%d;1m||  \e[0m 123   \e[%d;1m||  ",BLUE,YELLOW);
+				if(cols[i] == 0)
+				{
+					printf("\e[%d;1m||  \e[0m 123   \e[%d;1m||  ",BLUE,YELLOW);
+				}
+				else
+				{
+					printf("\e[%d;1m||   123   ||  ",cols[i]);
+				}
 				break;
 
 			case -2:
@@ -90,7 +122,14 @@ void renderCards(int cards, int* cols, int* nums)
 				break;
 
 			default:
-				printf("\e[%d;1m||    %d    ||  ",cols[i],nums[i]);
+				if(cols[i] == 0)
+				{
+					printf("\e[%d;1m||    \e[0m%d    \e[%d;1m||  ",BLUE,nums[i],YELLOW);
+				}
+				else
+				{
+					printf("\e[%d;1m||    %d    ||  ",cols[i],nums[i]);
+				}
 				break;
 		}
 	}
@@ -102,7 +141,14 @@ void renderCards(int cards, int* cols, int* nums)
 			switch(nums[j])
 			{
 				case -1:
-					printf("\e[%d;1m||         \e[%d;1m||  ",BLUE,GREEN);
+					if(cols[j] == 0)
+					{
+						printf("\e[%d;1m||         \e[%d;1m||  ",BLUE,GREEN);
+					}
+					else
+					{
+						printf("\e[%d;1m||         ||  ",cols[j]);
+					}
 					break;
 
 				case -2:
@@ -110,7 +156,14 @@ void renderCards(int cards, int* cols, int* nums)
 					break;
 
 				default:
-					printf("\e[%d;1m||         ||  ",cols[j]);
+					if(cols[j] == 0)
+					{
+						printf("\e[%d;1m||         \e[%d;1m||  ",BLUE,GREEN);
+					}
+					else
+					{
+						printf("\e[%d;1m||         ||  ",cols[j]);
+					}
 					break;
 			}
 		}
@@ -121,7 +174,14 @@ void renderCards(int cards, int* cols, int* nums)
 		switch(nums[i])
 		{
 			case -1:
-				printf("\e[%d;1m |||||\e[%d;1m||||||   ",BLUE,GREEN);
+				if(cols[i] == 0)
+				{
+					printf("\e[%d;1m ||||||\e[%d;1m|||||   ",BLUE, GREEN);
+				}
+				else
+				{
+					printf("\e[%d;1m |||||||||||   ",cols[i]);
+				}
 				break;
 
 			case -2:
@@ -129,7 +189,14 @@ void renderCards(int cards, int* cols, int* nums)
 				break;
 
 			default:
-				printf("\e[%d;1m |||||||||||   ",cols[i]);
+				if(cols[i] == 0)
+				{
+					printf("\e[%d;1m ||||||\e[%d;1m|||||   ",BLUE, GREEN);
+				}
+				else
+				{
+					printf("\e[%d;1m |||||||||||   ",cols[i]);
+				}
 				break;
 		}
 	}

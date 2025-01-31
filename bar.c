@@ -36,6 +36,18 @@ int compareCard(puzzlePiece p, int tmp, int col, int num)
 {
     if(num == -1)
     {
+        if(col == 0)
+        {
+            return TRUE;
+        }
+        if(p.col != col)
+        {
+            return FALSE;
+        }
+        return TRUE;
+    }
+    if(col == 0)
+    {
         return TRUE;
     }
     if(p.col != col) //must have same color
@@ -56,5 +68,6 @@ int compareCard(puzzlePiece p, int tmp, int col, int num)
         if(p.nums[i] == num)
             return TRUE;
     }
+    printf("faaalse");
     return FALSE;
 }
