@@ -221,7 +221,23 @@ int main()
                         "||         ||  \n"
                         "||         ||  \n"
                         " ||||||||||| \e[0m\n\n",BLUE);
-                printf("Wild card:\nThis card can be used as a card of any color and number. It can be matched on anything.\n");
+                printf("Wild card:\nThey can be played as any number and/or color. Some have a given number or color. Those cards must be played on anything.\nCards that say 'any' on them are for any number. Cards with four colors on them are for any color.\n");
+                printf(" \e[%d;1m||||||\e[%d;1m||||| \t \e[%d;1m||||||\e[%d;1m||||| \t \e[%d;1m|||||||||||\n"
+                       "\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         ||\n"
+                       "\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         ||\n"
+                       "\e[%d;1m||   \e[0m 2    \e[%d;1m||\t\e[%d;1m||   \e[0many   \e[%d;1m||\t\e[%d;1m||    3    ||\n"
+                       "\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         ||\n"
+                       "\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         ||\n"
+                       " \e[%d;1m|||||\e[%d;1m|||||| \t \e[%d;1m|||||\e[%d;1m|||||| \t \e[%d;1m|||||||||||\n\n\e[0m",
+                    RED,YELLOW,RED,YELLOW,GREEN,
+                    RED,YELLOW,RED,YELLOW,GREEN,
+                    RED,YELLOW,RED,YELLOW,GREEN,
+                    BLUE,YELLOW,BLUE,YELLOW,GREEN,
+                    BLUE,GREEN,BLUE,GREEN,GREEN,
+                    BLUE,GREEN,BLUE,GREEN,GREEN,
+                    BLUE,GREEN,BLUE,GREEN,GREEN
+                );
+                /*printf("Wild card:\nThis card can be used as a card of any color and number. It can be matched on anything.\n");
                 printf(" \e[%d;1m|||||\e[%d;1m|||||| \n"
                 "\e[%d;1m||         \e[%d;1m||  \n"
                 "\e[%d;1m||         \e[%d;1m||  \n"
@@ -229,6 +245,22 @@ int main()
                 "\e[%d;1m||         \e[%d;1m||  \n"
                 "\e[%d;1m||         \e[%d;1m||  \n"
                 " \e[%d;1m||||||\e[%d;1m||||| \e[0m\n\n",RED,YELLOW,RED,YELLOW,RED,YELLOW,RED,GREEN,BLUE,GREEN,BLUE,GREEN,BLUE,GREEN,BLUE,GREEN);
+                printf("Wild card:\nThis card can be used as a card of any color but must be the number shown on the card (in this case 3)\n");
+                printf(" \e[%d;1m|||||\e[%d;1m|||||| \n"
+                "\e[%d;1m||         \e[%d;1m||  \n"
+                "\e[%d;1m||         \e[%d;1m||  \n"
+                "\e[%d;1m||    3    \e[%d;1m||  \n"
+                "\e[%d;1m||         \e[%d;1m||  \n"
+                "\e[%d;1m||         \e[%d;1m||  \n"
+                " \e[%d;1m||||||\e[%d;1m||||| \e[0m\n\n",RED,YELLOW,RED,YELLOW,RED,YELLOW,RED,GREEN,BLUE,GREEN,BLUE,GREEN,BLUE,GREEN,BLUE,GREEN);
+                printf("Wild card:\nThis card can be used as a card of any number but must be the color shown on the card (in this case yellow)\n");
+                printf(" \e[%d;1m||||||||||| \n"
+                "||         ||  \n"
+                "||         ||  \n"
+                "||   any   ||  \n"
+                "||         ||  \n"
+                "||         ||  \n"
+                " ||||||||||| \e[0m\n\n",YELLOW);*/
                 printf("Action card:\nThis card is used to draw two cards. It cannot be used for guessing and only one can be used per turn.\n");
                 printf(" \e[%d;1m||||||||||| \n"
                 "||         ||  \n"
