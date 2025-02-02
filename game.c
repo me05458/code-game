@@ -57,7 +57,7 @@ int draw() //returns:
 		renderCards(cardnum,handcol,handnum);
 		return 1;
 	}
-	//if(something == 6) //1 in 20 chance of only number wild card
+	if(something == 6) //1 in 20 chance of only number wild card
 	{
 		handcol[cardnum -1] = colStore[randombytes_uniform(4)];
 		handnum[cardnum -1] = -1;
