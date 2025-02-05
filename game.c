@@ -6,11 +6,11 @@
 #include "bar.h"
 
 //global variables:
-int colStore[4];
+int colStore[4]; //this is to keep track of colors in an easy to randomly generate way
 int handcol[9]; //0 means any color or action card
 int handnum[9]; //number  = -1 means wold card, -2 means action card
-int cardnum = 0;
-int tmp;
+int cardnum = 0; //number of cards in hand
+int puzzleNum;
 int turns = 0;
 int step = 0;
 puzzlePiece p1;
@@ -52,7 +52,7 @@ int draw() //returns:
 	{
 		handcol[cardnum -1] = 0;
 		handnum[cardnum -1] = -2;
-		renderBar(tmp,p1,p2,p3,p4,turns,step); //draw
+		renderBar(puzzleNum,p1,p2,p3,p4,turns,step); //draw
 		renderCards(cardnum,handcol,handnum);
 		return 1;
 	}
@@ -74,7 +74,7 @@ int draw() //returns:
 	{
 		handcol[cardnum -1] = 0;
 		handnum[cardnum -1] = -1;
-		renderBar(tmp, p1,p2,p3,p4,turns,step);
+		renderBar(puzzleNum, p1,p2,p3,p4,turns,step);
 		renderCards(cardnum,handcol,handnum);
 		return 2;
 	}
@@ -86,7 +86,7 @@ int draw() //returns:
 	//make it a random card
 	handcol[cardnum -1] = colStore[randombytes_uniform(4)];
 	handnum[cardnum -1] = randombytes_uniform(6);
-	renderBar(tmp, p1, p2, p3, p4,turns,step); //draw
+	renderBar(puzzleNum, p1, p2, p3, p4,turns,step); //draw
 	renderCards(cardnum, handcol, handnum);
 	return 1;
 }
@@ -95,7 +95,7 @@ int guess() //returns:
 			//2 - guessed it
 			//0 - user wants to quit! (after guessing it)
 {
-	renderBar(tmp,p1,p2,p3,p4,turns,step);
+	renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 	renderCards(cardnum, handcol, handnum);
 	//painstakingly gather guesses
 	printf("Enter sequence of cards: ");
@@ -126,10 +126,10 @@ int guess() //returns:
 	{
 		printf("Not a valid card!\n");
 	}
-	ch1 = compareCard(p1,tmp,handcol[a],handnum[a]);
-	ch2 = compareCard(p2,tmp,handcol[b],handnum[b]);
-	ch3 = compareCard(p3,tmp,handcol[c],handnum[c]);
-	ch4 = compareCard(p4,tmp,handcol[d],handnum[d]);
+	ch1 = compareCard(p1,puzzleNum,handcol[a],handnum[a]);
+	ch2 = compareCard(p2,puzzleNum,handcol[b],handnum[b]);
+	ch3 = compareCard(p3,puzzleNum,handcol[c],handnum[c]);
+	ch4 = compareCard(p4,puzzleNum,handcol[d],handnum[d]);
 	if(ch1 == 1 && ch2 == 1 && ch3 == 1 && ch4 == 1)
 	{
 		if(turns == 1)
@@ -160,7 +160,7 @@ int discard() //returns:
 				//1 - not valid return
 				//0 - all is fine
 {
-	renderBar(tmp,p1,p2,p3,p4,turns,step);
+	renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 	renderCards(cardnum, handcol, handnum);
 	printf("Card to discard: ");//which one?
 	int store; //we put numbers in here
@@ -203,7 +203,7 @@ int discard() //returns:
 		handcol[cardnum+1] = -1;
 	}
 	//draw
-	renderBar(tmp,p1,p2,p3,p4,turns,step);
+	renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 	renderCards(cardnum, handcol, handnum);
 	return 0; //okay done
 }
@@ -211,7 +211,7 @@ int discardGiven(int card) //returns:
 //1 - not valid return
 //0 - all is fine
 {
-	renderBar(tmp,p1,p2,p3,p4,turns,step);
+	renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 	renderCards(cardnum, handcol, handnum);
 	if(card >= cardnum||card<0) //what? Nonsense!
 	{
@@ -235,7 +235,7 @@ int discardGiven(int card) //returns:
 		handcol[cardnum+1] = -1;
 	}
 	//draw
-	renderBar(tmp,p1,p2,p3,p4,turns,step);
+	renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 	renderCards(cardnum, handcol, handnum);
 	return 0; //okay done
 }
@@ -257,26 +257,26 @@ int main()
 	}
 	randombytes_buf(randString, 32);
 	//this guy's gonna be the number of difficulty used
-	tmp = -1;
+	puzzleNum = -1;
 	int tmpchar = ' ';
-	while(tmp <=0) //make user give number
+	while(puzzleNum <=0) //make user give number
 	{
 		printf("How many numbers do you want? (can't be more than 6, 3 default): ");
 		char input;
 		input = getchar();
 		if(input == '\n')
 		{
-			tmp = 3;
+			puzzleNum = 3;
 		}
 		else
 		{
-			tmp = charEater(input);
-			if(tmp <=0)
+			puzzleNum = charEater(input);
+			if(puzzleNum <=0)
 				printf("Not a suitable number\n");
-			if(tmp >6)//character? gross (Also I don't like 7 8 9)
+			if(puzzleNum >6)//character? gross (Also I don't like 7 8 9)
 			{
 				printf("I refuse to use that number\n");
-				tmp = -1;
+				puzzleNum = -1;
 			}
 			cleanChar();
 		}
@@ -293,7 +293,7 @@ int main()
 		}
 		//initial pieces
 		int wildpiece = randombytes_uniform(3);
-		for(int i = 0; i<tmp; i++)
+		for(int i = 0; i<puzzleNum; i++)
 		{
 			p1.nums[i] = randombytes_uniform(6);
 			p2.nums[i] = randombytes_uniform(6);
@@ -307,9 +307,9 @@ int main()
 		while(thing != 1)
 		{
 			thing = 1;
-			for(int i=0; i<tmp; i++)
+			for(int i=0; i<puzzleNum; i++)
 			{
-				for(int j = 0; j<tmp; j++)
+				for(int j = 0; j<puzzleNum; j++)
 				{
 					if((p1.nums[i] == p1.nums[j])&&j!=i)
 					{
@@ -326,9 +326,9 @@ int main()
 			while(thing != 1)
 			{
 				thing = 1;
-				for(int i=0; i<tmp; i++)
+				for(int i=0; i<puzzleNum; i++)
 				{
-					for(int j = 0; j<tmp; j++)
+					for(int j = 0; j<puzzleNum; j++)
 					{
 						if((p4.nums[i] == p4.nums[j])&&j!=i)
 						{
@@ -344,9 +344,9 @@ int main()
 		while(thing != 1)
 		{
 			thing = 1;
-			for(int i=0; i<tmp; i++)
+			for(int i=0; i<puzzleNum; i++)
 			{
-				for(int j = 0; j<tmp; j++)
+				for(int j = 0; j<puzzleNum; j++)
 				{
 					if((p3.nums[i] == p3.nums[j])&&j!=i)
 					{
@@ -361,9 +361,9 @@ int main()
 		while(thing != 1)
 		{
 			thing = 1;
-			for(int i=0; i<tmp; i++)
+			for(int i=0; i<puzzleNum; i++)
 			{
-				for(int j = 0; j<tmp; j++)
+				for(int j = 0; j<puzzleNum; j++)
 				{
 					if((p2.nums[i] == p2.nums[j])&&j!=i)
 					{
@@ -374,11 +374,11 @@ int main()
 				}
 			}
 		}
-		p1.nums[tmp+1] = -1;
-		sort(tmp, p1.nums);
-		sort(tmp, p2.nums);
-		sort(tmp, p3.nums);
-		sort(tmp, p4.nums);
+		p1.nums[puzzleNum+1] = -1;
+		sort(puzzleNum, p1.nums);
+		sort(puzzleNum, p2.nums);
+		sort(puzzleNum, p3.nums);
+		sort(puzzleNum, p4.nums);
 		p1.col = colStore[randombytes_uniform(4)];
 		p2.col = colStore[randombytes_uniform(4)];
 		p3.col = colStore[randombytes_uniform(4)];
@@ -388,7 +388,7 @@ int main()
 		while(solved == FALSE) //until the user gets it...
 		{
 			step = 1;
-			renderBar(tmp, p1, p2, p3, p4, turns,step);
+			renderBar(puzzleNum, p1, p2, p3, p4, turns,step);
 			renderCards(cardnum, handcol, handnum);
 			int tmp1 = 0; //I'm gonna put characters in here
 first_step: //part when user says to draw card
@@ -406,12 +406,12 @@ first_step: //part when user says to draw card
 			}
 			switch (tmp1) {
 				case 0: //help
-					renderBar(tmp,p1,p2,p3,p4,turns,step);
+					renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 					renderCards(cardnum, handcol, handnum);
 					printf("Available actions:\n\e[0m0:this list\n1:new card\n\e[30;1m2:use action card [UNAVAILABLE]\n\e[30;1m3:make a guess [UNAVIALABLE]\n\e[30;1m4:discard [UNAVAILABLE]\n\e[0m9:quit\n");
 					goto first_step;
 				case 1: //draw card
-					renderBar(tmp,p1,p2,p3,p4,turns,step);
+					renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 					renderCards(cardnum, handcol, handnum);
 					tmp1 = draw();
 					for(int i = 0; i<cardnum; i++)
@@ -419,13 +419,13 @@ first_step: //part when user says to draw card
 						if(handnum[i] == -2)
 						{
 							step = 2;
-							renderBar(tmp,p1,p2,p3,p4,turns,step);
+							renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 							renderCards(cardnum, handcol, handnum);
 							goto onepttwo_step;
 						}
 					}
 					step = 3;
-					renderBar(tmp,p1,p2,p3,p4,turns,step);
+					renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 					renderCards(cardnum, handcol, handnum);
 					goto second_step; //otherwise it's normal
 				case 9: //quit
@@ -450,12 +450,12 @@ onepttwo_step: //you can only do this once! (I could've written it without the g
 	}
 	switch(tmp1){
 		case 0: //help
-			renderBar(tmp,p1,p2,p3,p4,turns,step);
+			renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 			renderCards(cardnum, handcol, handnum);
 			printf("\e[0mAvailable actions:\n0:this list\n\e[30;1m1:new card [UNAVAILABLE]\n\e[0m2:use action card\n3:make a guess\n4:discard\n9:quit\n");
 			goto onepttwo_step;
 		case 3: // make a guess
-			renderBar(tmp,p1,p2,p3,p4,turns,step);
+			renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 			renderCards(cardnum, handcol, handnum);
 			tmp1 = guess();
 			if(tmp1 == 0)
@@ -468,26 +468,26 @@ onepttwo_step: //you can only do this once! (I could've written it without the g
 			goto second_step;
 		case 4: // discard
 			step = 4;
-			renderBar(tmp,p1,p2,p3,p4,turns,step);
+			renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 			renderCards(cardnum, handcol, handnum);
 			tmp1 = discard();
 			if(tmp1 == 1)
 			{
 				step = 3;
-				renderBar(tmp,p1,p2,p3,p4,turns,step);
+				renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 				renderCards(cardnum, handcol, handnum);
 				goto second_step;
 			}
 			if(cardnum > 4)
 			{
 				step = 4;
-				renderBar(tmp,p1,p2,p3,p4,turns,step);
+				renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 				renderCards(cardnum, handcol, handnum);
 				goto third_step;
 			}
 			goto last_step;
 		case 2: //use action card
-			renderBar(tmp,p1,p2,p3,p4,turns,step);
+			renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 			renderCards(cardnum, handcol, handnum);
 			printf("Card to use: ");
 			tmpchar = getchar();
@@ -514,7 +514,7 @@ onepttwo_step: //you can only do this once! (I could've written it without the g
 			draw();
 			draw();
 			step = 3;
-			renderBar(tmp,p1,p2,p3,p4,turns,step);
+			renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 			renderCards(cardnum, handcol, handnum);
 			goto second_step;
 		case 9: //quit
@@ -538,12 +538,12 @@ second_step: //user gueses or discards
 			}
 			switch(tmp1){
 				case 0: //help
-					renderBar(tmp,p1,p2,p3,p4,turns,step);
+					renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 					renderCards(cardnum, handcol, handnum);
 					printf("\e[0mAvailable actions:\n0:this list\n\e[30;1m1:new card [UNAVAILABLE]\n2:use action card [UNAVAILABLE]\n\e[0m3:make a guess\n4:discard\n9:quit\n");
 					goto second_step;
 				case 3://guess
-					renderBar(tmp,p1,p2,p3,p4,turns,step);
+					renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 					renderCards(cardnum, handcol, handnum);
 					tmp1 = guess();
 					if(tmp1 == 0)
@@ -556,7 +556,7 @@ second_step: //user gueses or discards
 					goto second_step;
 				case 4: //discard
 					step = 4;
-					renderBar(tmp,p1,p2,p3,p4,turns,step);
+					renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 					renderCards(cardnum, handcol, handnum);
 					tmp1 = discard();
 					if(tmp1 == 1)
@@ -564,7 +564,7 @@ second_step: //user gueses or discards
 					if(cardnum > 4)
 					{
 						step = 4;
-						renderBar(tmp,p1,p2,p3,p4,turns,step);
+						renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
 						renderCards(cardnum, handcol, handnum);
 						goto third_step;
 					}
