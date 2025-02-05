@@ -18,7 +18,6 @@ puzzlePiece p2;
 puzzlePiece p3;
 puzzlePiece p4;
 
-
 //reset the character input area
 //idk how it works copied off a forum
 void cleanChar()
@@ -99,18 +98,22 @@ int guess() //returns:
 	renderBar(tmp,p1,p2,p3,p4,turns,step);
 	renderCards(cardnum, handcol, handnum);
 	//painstakingly gather guesses
-	printf("First card: ");
+	printf("Enter sequence of cards: ");
 	int a, b, c, d;
-	scanf("%d", &a);
-	cleanChar();
-	printf("Second card: ");
-	scanf("%d", &b);
-	cleanChar();
-	printf("Third card: ");
-	scanf("%d", &c);
-	cleanChar();
-	printf("Fourth card: ");
-	scanf("%d", &d);
+	char ac,bc,cc,dc;
+	ac = getchar();
+	bc = getchar();
+	cc = getchar();
+	dc = getchar();
+	if(ac == '\n' || bc == '\n' || cc == '\n' || dc == '\n')
+	{
+		printf("please enter an actual sequence!\n");
+		return 1;
+	}
+	a = charEater(ac);
+	b = charEater(bc);
+	c = charEater(cc);
+	d = charEater(dc);
 	cleanChar();
 	//are the guesses right?
 	if (a == b || a == c || a == d || b == c || b == d || c == d)
@@ -135,8 +138,16 @@ int guess() //returns:
 			printf("You guessed it after %d turns! Another round?(1/0): ",turns);
 		//solved = TRUE; //okay they got it
 		int thing; //put some characters here
-		scanf("%d",&thing);
-		cleanChar();
+		int tmpchar = getchar();
+		if(tmpchar == '\n')
+		{
+			thing = 1;
+		}
+		else
+		{
+			thing = charEater(tmpchar);
+			cleanChar();
+		}
 		if(thing == 0)
 			return 0; //oh the user wants to quit
 		return 2;
@@ -153,13 +164,27 @@ int discard() //returns:
 	renderCards(cardnum, handcol, handnum);
 	printf("Card to discard: ");//which one?
 	int store; //we put numbers in here
-	scanf("%d",&store);
-	cleanChar();
+	int tmpchar = getchar();
+	if(tmpchar == '\n')
+	{
+		store = -11;
+	}
+	else
+	{
+		store = charEater(tmpchar);
+		cleanChar();
+	}
+	if(store == -11)
+	{
+		printf("please select a card\n");
+		return 1;
+	}
 	if(store >= cardnum||store<0) //what? Nonsense!
 	{
 		printf("Not a valid card\n");
 		return 1; //make em do it again
 	}
+
 	if(store == cardnum-1){ //last card, nice!
 		cardnum--; //just remove one of everything
 		handnum[store] = -1;
@@ -233,19 +258,27 @@ int main()
 	randombytes_buf(randString, 32);
 	//this guy's gonna be the number of difficulty used
 	tmp = -1;
+	int tmpchar = ' ';
 	while(tmp <=0) //make user give number
 	{
-		printf("How many numbers do you want? (can't be more than 6): ");
-		int input;
-		scanf(" %d",&input);
-		tmp = input;
-		cleanChar();
-		if(tmp <=0)
-			printf("Not a suitable number\n");
-		if(tmp >6)//character? gross (Also I don't like 7 8 9)
+		printf("How many numbers do you want? (can't be more than 6, 3 default): ");
+		char input;
+		input = getchar();
+		if(input == '\n')
 		{
-			printf("I refuse to use that number\n");
-			tmp = -1;
+			tmp = 3;
+		}
+		else
+		{
+			tmp = charEater(input);
+			if(tmp <=0)
+				printf("Not a suitable number\n");
+			if(tmp >6)//character? gross (Also I don't like 7 8 9)
+			{
+				printf("I refuse to use that number\n");
+				tmp = -1;
+			}
+			cleanChar();
 		}
 	}
 	while(4 != FALSE) //in other words, FOREVER (I didn't remember exact val of FALSE)
@@ -360,8 +393,17 @@ int main()
 			int tmp1 = 0; //I'm gonna put characters in here
 first_step: //part when user says to draw card
 			printf("Action (0 for help): ");
-			scanf(" %d",&tmp1);
-			cleanChar();
+			tmpchar = getchar();
+			if(tmpchar == '\n')
+			{
+				tmp1 = 0;
+			}
+			else
+			{
+				tmp1 = charEater(tmpchar);
+
+				cleanChar();
+			}
 			switch (tmp1) {
 				case 0: //help
 					renderBar(tmp,p1,p2,p3,p4,turns,step);
@@ -395,8 +437,17 @@ first_step: //part when user says to draw card
 onepttwo_step: //you can only do this once! (I could've written it without the goto onepttwo_step but it's neater this way)
 	step = 2;
 	printf("Action (0 for help): ");
-	scanf(" %d",&tmp1);
-	cleanChar();
+	tmpchar = getchar();
+	if(tmpchar == '\n')
+	{
+		tmp1 = 0;
+	}
+	else
+	{
+		tmp1 = charEater(tmpchar);
+
+		cleanChar();
+	}
 	switch(tmp1){
 		case 0: //help
 			renderBar(tmp,p1,p2,p3,p4,turns,step);
@@ -439,8 +490,16 @@ onepttwo_step: //you can only do this once! (I could've written it without the g
 			renderBar(tmp,p1,p2,p3,p4,turns,step);
 			renderCards(cardnum, handcol, handnum);
 			printf("Card to use: ");
-			scanf(" %d",&tmp1);
-			cleanChar();
+			tmpchar = getchar();
+			if(tmpchar == '\n')
+			{
+				tmp1 = 0;
+			}
+			else
+			{
+				tmp1 = charEater(tmpchar);
+				cleanChar();
+			}
 			if(handnum[tmp1]!=-2)
 			{
 				printf("That is not a valid action card.\n");
@@ -467,8 +526,16 @@ onepttwo_step: //you can only do this once! (I could've written it without the g
 second_step: //user gueses or discards
 			step = 3;
 			printf("Action (0 for help): ");
-			scanf(" %d",&tmp1);
-			cleanChar();
+			tmpchar = getchar();
+			if(tmpchar == '\n')
+			{
+				tmp1 = 0;
+			}
+			else
+			{
+				tmp1 = charEater(tmpchar);
+				cleanChar();
+			}
 			switch(tmp1){
 				case 0: //help
 					renderBar(tmp,p1,p2,p3,p4,turns,step);

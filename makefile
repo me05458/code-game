@@ -23,7 +23,7 @@ all: $(LINK_TARGET)
 
 $(LINK_TARGET): $(OBJS) tutorial.o $(COLOR)
 	gcc -o $@ $(OBJS) $(COLOR) -lsodium
-	gcc -o $(TUTORIAL_TARGET) $(COLOR) tutorial.o
+	gcc -o $(TUTORIAL_TARGET) pieces.o $(COLOR) tutorial.o
 
 
 %.o : %.c
@@ -42,6 +42,6 @@ clean:
 
 colorless: $(OBJS) $(COLORLESS) tutorial.o
 	gcc -o game $(OBJS) $(COLORLESS) -lsodium
-	gcc -o $(TUTORIAL_TARGET) tutorial.o $(COLORLESS)
+	gcc -o $(TUTORIAL_TARGET) pieces.o tutorial.o $(COLORLESS)
 	@echo done
 	@echo type './tutorial' for a tutorial or './game' to play

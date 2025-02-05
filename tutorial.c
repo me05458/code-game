@@ -19,6 +19,7 @@ int main()
     system("clear");
     int tmp = 1;
     int tmp1 = 1;
+    int tmpchar = ' ';
 
     printf("---------------Code Game Reference/tutorial-----------------\n");
     printf("This tutorial has the following sections:\n"
@@ -31,8 +32,16 @@ int main()
     );
     printf("\nThis game involves typing numbers to access commands. If you can't do this you're going to have some problems. For the sake of this tutorial, you can type a section number to go to that section, 0 to simply advance to the next step (it will loop back around after the last step). To leave the tutorial type 9. This will always be the key to quit.\n");
     printf("\nAction: ");
-    scanf(" %d", &tmp1);
-    cleanChar();
+    tmpchar = getchar();
+    if(tmpchar == '\n')
+    {
+        tmp1 = 0;
+    }
+    else
+    {
+        tmp1 = charEater(tmpchar);
+        cleanChar();
+    }
     if(tmp1 == 0 && tmp <5)
     {
         tmp++;
@@ -70,6 +79,7 @@ int main()
                 "3: Guess a sequence\n"
                 "4: Discard cards down to 4. You can only have 4 cards in your hand at the start of each round. Also note that discarding cards is one step. Once you start discarding you may not guess.\n"
                 "If you need help, type 0. It will display all available commands at any given step. Not all commands are always available at all times due to the step-based nature of the game.       \n"
+                "You can also just press enter, which will take you to a default (usually help, sometimes yes or a specified default in the game or advance in the tutorial)\n"
                     "\nThe commands for the actions are as follows:\n"
                     "0: Help (view available commands)\n"
                     "1: Draw a card\n"
@@ -86,8 +96,16 @@ int main()
                 printf("This is a system check to make sure your window can render the game correctly. If your system fails the test, the game can still run, it's just going to be difficult.\n");
                 printf("Also note that this tutorial requires a slightly larger terminal to be fully displayed than the game does. Therefore, your system may pass the test and look weird in the tutorial. This problem can be solved by scrolling.\n");
                 printf("Begin?(1/0): ");
-                scanf(" %d",&tmp1);
-                cleanChar();
+                tmpchar = getchar();
+                if(tmpchar == '\n')
+                {
+                    tmp1 = 1;
+                }
+                else
+                {
+                    tmp1 = charEater(tmpchar);
+                    cleanChar();
+                }
                 if(tmp1 != 1)
                 {
                     system("clear");
@@ -108,8 +126,16 @@ int main()
 
                     );
                 printf("Keep checking?(1/0): ");
-                scanf(" %d",&tmp1);
-                cleanChar();
+                tmpchar = getchar();
+                if(tmpchar == '\n')
+                {
+                    tmp1 = 1;
+                }
+                else
+                {
+                    tmp1 = charEater(tmpchar);
+                    cleanChar();
+                }
                 if(tmp1 != 1)
                 {
                     system("clear");
@@ -156,8 +182,16 @@ int main()
                 printf("Action (0 for help): \n");
 
                 printf("\nWould you like to see an explanation of the parts?(1/0): ");
-                scanf(" %d",&tmp1);
-                cleanChar();
+                tmpchar = getchar();
+                if(tmpchar == '\n')
+                {
+                    tmp1 = 1;
+                }
+                else
+                {
+                    tmp1 = charEater(tmpchar);
+                    cleanChar();
+                }
                 if(tmp1 != 1)
                 {
                     system("clear");
@@ -225,7 +259,7 @@ int main()
                 printf(" \e[%d;1m||||||\e[%d;1m||||| \t \e[%d;1m||||||\e[%d;1m||||| \t \e[%d;1m|||||||||||\n"
                        "\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         ||\n"
                        "\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         ||\n"
-                       "\e[%d;1m||   \e[0m 2    \e[%d;1m||\t\e[%d;1m||   \e[0many   \e[%d;1m||\t\e[%d;1m||    3    ||\n"
+                       "\e[%d;1m||   \e[0m 2    \e[%d;1m||\t\e[%d;1m||   \e[0many   \e[%d;1m||\t\e[%d;1m||   123   ||\n"
                        "\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         ||\n"
                        "\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         ||\n"
                        " \e[%d;1m|||||\e[%d;1m|||||| \t \e[%d;1m|||||\e[%d;1m|||||| \t \e[%d;1m|||||||||||\n\n\e[0m",
@@ -313,8 +347,16 @@ int main()
         }
 
         printf("\nAction: ");
-        scanf(" %d", &tmp1);
-        cleanChar();
+        tmpchar = getchar();
+        if(tmpchar == '\n')
+        {
+            tmp1 = 0;
+        }
+        else
+        {
+            tmp1 = charEater(tmpchar);
+            cleanChar();
+        }
         if(tmp1 == 0 && tmp <5)
         {
             tmp++;

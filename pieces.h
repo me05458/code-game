@@ -3,6 +3,8 @@ typedef struct{
     int col;
 }puzzlePiece;
 
+int charEater(char c); //this guy turns characters into numbers!
+
 #define RED 31
 #define YELLOW 33
 #define GREEN 32
