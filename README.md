@@ -21,7 +21,6 @@ to run the tutorial: `./tutorial`\
 to run the game without tutorial: `./game`
 
 # Colorless mode
-Note that tutorial only exists in color.\
 To enter colorless mode:
 ```
 make clean
@@ -36,4 +35,4 @@ make
 # known issues
 - the `system()` function poses a security vulnerability
 - Some redundant/inefficient code and files exist
-- tutorial does not include all possible cards
+- tutorial only exists in color
