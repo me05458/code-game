@@ -160,8 +160,8 @@ int discard() //returns:
 				//1 - not valid return
 				//0 - all is fine
 {
-	renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
-	renderCards(cardnum, handcol, handnum);
+	//renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
+	//renderCards(cardnum, handcol, handnum);
 	printf("Card to discard: ");//which one?
 	int store; //we put numbers in here
 	int tmpchar = getchar();
@@ -203,8 +203,8 @@ int discard() //returns:
 		handcol[cardnum+1] = -1;
 	}
 	//draw
-	renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
-	renderCards(cardnum, handcol, handnum);
+	//renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
+	//renderCards(cardnum, handcol, handnum);
 	return 0; //okay done
 }
 int discardGiven(int card) //returns:
@@ -391,7 +391,8 @@ int main()
 			renderBar(puzzleNum, p1, p2, p3, p4, turns,step);
 			renderCards(cardnum, handcol, handnum);
 			int tmp1 = 0; //I'm gonna put characters in here
-first_step: //part when user says to draw card
+			first_step: //part when user says			draw();
+			//to draw card
 			printf("Action (0 for help): ");
 			tmpchar = getchar();
 			if(tmpchar == '\n')
@@ -474,8 +475,8 @@ onepttwo_step: //you can only do this once! (I could've written it without the g
 			if(tmp1 == 1)
 			{
 				step = 3;
-				renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
-				renderCards(cardnum, handcol, handnum);
+				//renderBar(puzzleNum,p1,p2,p3,p4,turns,step);
+				//renderCards(cardnum, handcol, handnum);
 				goto second_step;
 			}
 			if(cardnum > 4)
