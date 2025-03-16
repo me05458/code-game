@@ -27,11 +27,11 @@
 //||         ||
 //||         ||
 // |||||||||||
-void renderCards(int cards, int* cols, int* nums)
+void renderCards(int cards, int* cols, int* nums) //draws all of the cards
 {
 	for(int i = 0; i<cards; i++)
 	{
-		printf("\e[0m      %d        ", i);
+		printf("\e[0m      %d        ", i); //the numbers so you know which number is each card in hand
 	}
 	printf("\n");
 

@@ -14,7 +14,7 @@
 
 void renderBar(int tmp, puzzlePiece p1, puzzlePiece p2, puzzlePiece p3, puzzlePiece p4,int turns, int step)
 {
-    system("clear"); //I know, I know, I'm working on it
+    system("clear");
     printf("Turns: %d\tStep: %d\n",turns,step);
     printf("------------------------------------------------\n");
     printf("\e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m ||||||| \n",p1.col, p2.col,p3.col,p4.col);
@@ -25,7 +25,6 @@ void renderBar(int tmp, puzzlePiece p1, puzzlePiece p2, puzzlePiece p3, puzzlePi
             printf("||  %d  || \n", p4.nums[i]);
         else
             printf("||  *  ||\n");
-
     }
     printf("\e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m ||||||| \n\e[0m",p1.col, p2.col,p3.col,p4.col);
     printf("------------------------------------------------\n");
@@ -34,8 +33,8 @@ void renderBar(int tmp, puzzlePiece p1, puzzlePiece p2, puzzlePiece p3, puzzlePi
 //check if a card matches a puzzlePiece
 int compareCard(puzzlePiece p, int tmp, int col, int num)
 {
-    if(num == -1)
-    {
+    if(num == -1) //wild card (any number works)
+    { //so return if color matches
         if(col == 0)
         {
             return TRUE;
@@ -46,7 +45,7 @@ int compareCard(puzzlePiece p, int tmp, int col, int num)
         }
         return TRUE;
     }
-    if(col == 0)
+    if(col == 0) //wild card
     {
         return TRUE;
     }
@@ -54,11 +53,11 @@ int compareCard(puzzlePiece p, int tmp, int col, int num)
     {
         return FALSE;
     }
-    if(p.nums[0] == -1)
+    if(p.nums[0] == -1) //one of those wild card pieces that can be any number
     {
         return TRUE;
     }
-    if(num == -2)
+    if(num == -2) //it's an action card!
     {
         printf("You cannot guess an action card\n");
         return FALSE;
@@ -68,6 +67,5 @@ int compareCard(puzzlePiece p, int tmp, int col, int num)
         if(p.nums[i] == num)
             return TRUE;
     }
-    printf("faaalse");
-    return FALSE;
+    return FALSE; //if all else fails it's false
 }
