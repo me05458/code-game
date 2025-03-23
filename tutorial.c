@@ -5,75 +5,75 @@
 #include "cards.h"
 
 //reset the character input area
-//idk how it works copied off a forum
 void cleanChar()
 {
-    while(getchar() != '\n') //actually, it just slurps up the characters in input until there are none left
+    while(getchar() != '\n') //it just slurps up the characters in input until there are none left
         continue;
 }
 
 
 int main()
 {
-
     system("clear");
-    int tmp = 1;
-    int tmp1 = 1;
-    int tmpchar = ' ';
+    int tmp = 1; //this is the actual stage things are on, sort of stores user input after some ~processing~
+    int tmp1 = 1; //stores user input once converted to int
+    int tmpchar = ' '; //stores the user input to advance through tutorial
 
+    //very first page (includes table of contents)
     printf("---------------Code Game Reference/tutorial-----------------\n");
     printf("This tutorial has the following sections:\n"
-    "1 - Table of Contents (aka this)\n"
+    "1 - Table of Contents\n"
     "2 - Introduction\n"
     "3 - System Check\n"
     "4 - Basic layout\n"
     "5 - Types of cards\n"
     "6 - Guessing and examples\n"
     );
+    //I honestly don't know how the user got to this point if they can't type numbers.
     printf("\nThis game involves typing numbers to access commands. If you can't do this you're going to have some problems. For the sake of this tutorial, you can type a section number to go to that section, 0 to simply advance to the next step (it will loop back around after the last step). To leave the tutorial type 9. This will always be the key to quit.\n");
     printf("\nAction: ");
-    tmpchar = getchar();
-    if(tmpchar == '\n')
+    tmpchar = getchar(); //slurp up the very first user input!
+    if(tmpchar == '\n') //if enter, default  = 1
     {
         tmp1 = 0;
     }
     else
     {
-        tmp1 = charEater(tmpchar);
+        tmp1 = charEater(tmpchar); //convert inputted character into an int for usage
         cleanChar();
     }
-    if(tmp1 == 0 && tmp <5)
+    if(tmp1 == 0 && tmp <6) //this means that default (enter) is just cycling through the table of contents
     {
-        tmp++;
+        tmp++; //go to next one
     }
-    else
+    else //further action is needed if at last item (6), one needs to cycle back to 1.
     {
-        if(tmp1 == 0)
+        if(tmp1 == 0) //if it was default, go to 1 (table of contents)
         {
             tmp = 1;
         }
-        else
-        {
+        else //otherwise everything is fine, no funny defaults
+        { //I don't know why I did it this way it seems kinda ugly
             tmp = tmp1;
         }
     }
-    while(tmp != 9)
+    while(tmp != 9) //if tmp == 9 that means exit!
     {
         system("clear");
-        switch(tmp)
+        switch(tmp) //different menu options
         {
-            case 1:
+            case 1: //regular table of contents
                 printf("This tutorial has the following sections:\n"
                     "1 - Table of Contents (aka this)\n"
                     "2 - Introduction\n"
                     "3 - System Check\n"
                     "4 - Basic layout\n"
                     "5 - Types of cards\n"
-                    "6 - Guessing and examples\n"
+                    "6 - Guessing and examples\n\n"
                 );
                 break;
-            case 2:
-                printf("This is the code game. It's called that becuase it's a game about codes, not because it's written in code (even though it is). The objective is to crack the code by matching cards by color and number to a given code. The game is played in turns. \n\nEach turn has the following steps:\n"
+            case 2: //introduction
+                printf("This is the code game. It's called that becuase it's a game about codes, not because it's written in code (even though it is). The objective is to crack the code by matching cards by color and number to a given code. The game is played in turns. \nNOTE: the game comes with a colorless mode that uses shapes instead of colors. This tutorial, however, does not support colorless mode.\n\nEach turn has the following steps:\n"
                 "1: Draw a card. You always draw a card first, even if you can already guess the code.\n"
                 "2: Play an action card. This step is omitted if there are no action cards. You can only play one action card per turn.\n"
                 "3: Guess a sequence\n"
@@ -88,33 +88,33 @@ int main()
                     "4: Use an action card\n"
                     "9: Quit\n"
 
-                    "\nAlso, if you need to answer a yes or no question, 1 is always yes and 0 is always no.\n"
+                    "\nAlso, if you need to answer a yes or no question, 1 is always yes and 0 is always no.\n\n"
                 );
                 break;
 
-            case 3:
+            case 3: //system check (mostly to align window!)
                 printf("This is a system check to make sure your window can render the game correctly. If your system fails the test, the game can still run, it's just going to be difficult.\n");
-                printf("Also note that this tutorial requires a slightly larger terminal to be fully displayed than the game does. Therefore, your system may pass the test and look weird in the tutorial. This problem can be solved by scrolling.\n");
+                printf("Also note that this tutorial requires a slightly larger terminal to be fully displayed than the game does. Therefore, your system may pass the test and look weird in the tutorial. This problem can be solved by scrolling.\n\n"); //this is actually very inconvenient. oops.
                 printf("Begin?(1/0): ");
                 tmpchar = getchar();
-                if(tmpchar == '\n')
+                if(tmpchar == '\n') //default = continue
                 {
                     tmp1 = 1;
                 }
-                else
+                else //otherwise slurp up whatever the user wanted
                 {
                     tmp1 = charEater(tmpchar);
                     cleanChar();
                 }
-                if(tmp1 != 1)
+                if(tmp1 != 1) //there's no error handling for not entering a 1 or 0 just exit for you
                 {
                     system("clear");
                     break;
                 }
                 system("clear");
-                printf("1\n|"
+                printf("1\n|" //this is designed to fit correctly WITH THE KEEP CHECKING PROMPT
                 "\n|"
-                "\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|"
+                "\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|\n|"
                 "\n| resize your window until you can see the 1"
                 "\n| and the 2 (on the same line as the ----- line)"
                 "\n| If you can't get the 1,"
@@ -125,8 +125,8 @@ int main()
                 "-----------------------------------------------------------------------------------------2\n"
 
                     );
-                printf("Keep checking?(1/0): ");
-                tmpchar = getchar();
+                printf("\nKeep checking?(1/0): ");
+                tmpchar = getchar(); //repeat the whole thing with the slorpery
                 if(tmpchar == '\n')
                 {
                     tmp1 = 1;
@@ -142,20 +142,17 @@ int main()
                     break;
                 }
                 system("clear");
-                printf("\e[0m*** \e[30;1m*** \e[%d;1m*** \e[%d;1m*** \e[%d;1m*** \e[%d;1m***\n",RED,YELLOW,GREEN,BLUE);
+                printf("\e[0m*** \e[30;1m*** \e[%d;1m*** \e[%d;1m*** \e[%d;1m*** \e[%d;1m***\n",RED,YELLOW,GREEN,BLUE); //this is boxes of assorted colors
                 printf("\e[0m*** \e[30;1m*** \e[%d;1m*** \e[%d;1m*** \e[%d;1m*** \e[%d;1m***\n",RED,YELLOW,GREEN,BLUE);
                 printf("\e[0m*** \e[30;1m*** \e[%d;1m*** \e[%d;1m*** \e[%d;1m*** \e[%d;1m***\n\e[0m",RED,YELLOW,GREEN,BLUE);
                 printf("The squares above should of the following colors: default (often white), gray, red, yellow, green, blue\n");
                 printf("If the squares are not of those colors but you can tell the difference between them, the game might look a little wonky but should still be playable.\n");
-                printf("If you can't tell the difference between some of the colors you might have some difficulties because color matching is important to the game. It is highly recommended to obtain a terminal that can do colors.\n");
+                printf("If you cannot differentiate between the squares, not all is lost! Play the game in colorless mode.\nTo do this, run 'make clean' and then 'make colorless'. If you want to go back to normal mode, run 'make clean' and 'make'. It is recommended to always clean when switching between modes.\nNOTE: tutorial is not designed to support colorless mode so things are just going to look weird.\n\n");
                 break;
-
-
-
-            case 4:
+            case 4: //game set up!
                 system("clear");
                 printf("This is what the game set up looks like:\n\n");
-                printf("Turns: %d\tStep: %d\n",0,1);
+                printf("Turns: %d\tStep: %d\n",0,1); //I'm pretty sure this part is just renderbar
                 printf("------------------------------------------------\n");
                 printf("\e[0m\e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||  \e[0m\n",RED, YELLOW,GREEN,BLUE);
                 for(int i = 0; i<3; i++) //wanna do each of the possible numbers
@@ -171,7 +168,7 @@ int main()
                     printf("\e[0m      %d        ", i);
                 }
                 printf("\n");
-                printf("\e[0m\e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||    \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\e[0m\e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||    \e[0m\n",BLUE,GREEN,YELLOW,RED); //haha brute force
                 printf("\e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m\n",BLUE,GREEN,YELLOW,RED);
                 printf("\e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m\n",BLUE,GREEN,YELLOW,RED);
                 printf("\e[%d;1m||    5    ||  \e[%d;1m||    2    ||  \e[%d;1m||    0    ||  \e[%d;1m||    3    ||   \e[0m\n",BLUE,GREEN,YELLOW,RED);
@@ -179,10 +176,10 @@ int main()
                 printf("\e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m\n",BLUE,GREEN,YELLOW,RED);
                 printf("\e[0m\e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||    \e[0m\n\n",BLUE,GREEN,YELLOW,RED);
 
-                printf("Action (0 for help): \n");
+                printf("Action (0 for help): \n"); //this is what the game looks like, not tutorial prompt.
 
                 printf("\nWould you like to see an explanation of the parts?(1/0): ");
-                tmpchar = getchar();
+                tmpchar = getchar(); //good old slorpery
                 if(tmpchar == '\n')
                 {
                     tmp1 = 1;
@@ -199,7 +196,7 @@ int main()
                 }
 
                 system("clear");
-                printf("* * * * * * * * * * * * *\n");
+                printf("* * * * * * * * * * * * *\n"); //stars outline the different possible things should make them highlighted?
                 printf("* Turns: %d\tStep: %d *\n",0,1);
                 printf("* * * * * * * * * * * * *");
                 printf(" <------- This keeps track of the turn and step you are on\n");
@@ -242,12 +239,12 @@ int main()
                 printf("* * * * * * * * * * * * *\n");
                 printf("* Action (0 for help):  *\n");
                 printf("* * * * * * * * * * * * *");
-                printf(" <------- This is the prompt where you type commands\n");
+                printf(" <------- This is the prompt where you type commands\n\n");
                 break;
 
-            case 5:
+            case 5: //card types!
                 printf("The following types of cards exist:\n\n");
-                printf("Normal card:\nMost cards are this way. It has a number and a color that can be matched.\n");
+                printf("Normal card:\nMost cards are this way. It has a number and a color that can be matched.\n"); //regular normal card
                 printf(" \e[%d;1m||||||||||| \n"
                         "||         ||  \n"
                         "||         ||  \n"
@@ -255,7 +252,7 @@ int main()
                         "||         ||  \n"
                         "||         ||  \n"
                         " ||||||||||| \e[0m\n\n",BLUE);
-                printf("Wild card:\nThey can be played as any number and/or color. Some have a given number or color. Those cards must be played on anything.\nCards that say 'any' on them are for any number. Cards with four colors on them are for any color.\n");
+                printf("Wild card:\nThey can be played as any number and/or color. Some have a given number or color. Those cards must be played on anything.\nCards that say 'any' on them are for any number. Cards with four colors on them are for any color.\n"); //wild cards (all 3 types)
                 printf(" \e[%d;1m||||||\e[%d;1m||||| \t \e[%d;1m||||||\e[%d;1m||||| \t \e[%d;1m|||||||||||\n"
                        "\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         ||\n"
                        "\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         \e[%d;1m||\t\e[%d;1m||         ||\n"
@@ -271,42 +268,18 @@ int main()
                     BLUE,GREEN,BLUE,GREEN,GREEN,
                     BLUE,GREEN,BLUE,GREEN,GREEN
                 );
-                /*printf("Wild card:\nThis card can be used as a card of any color and number. It can be matched on anything.\n");
-                printf(" \e[%d;1m|||||\e[%d;1m|||||| \n"
-                "\e[%d;1m||         \e[%d;1m||  \n"
-                "\e[%d;1m||         \e[%d;1m||  \n"
-                "\e[%d;1m||   \e[0many   \e[%d;1m||  \n"
-                "\e[%d;1m||         \e[%d;1m||  \n"
-                "\e[%d;1m||         \e[%d;1m||  \n"
-                " \e[%d;1m||||||\e[%d;1m||||| \e[0m\n\n",RED,YELLOW,RED,YELLOW,RED,YELLOW,RED,GREEN,BLUE,GREEN,BLUE,GREEN,BLUE,GREEN,BLUE,GREEN);
-                printf("Wild card:\nThis card can be used as a card of any color but must be the number shown on the card (in this case 3)\n");
-                printf(" \e[%d;1m|||||\e[%d;1m|||||| \n"
-                "\e[%d;1m||         \e[%d;1m||  \n"
-                "\e[%d;1m||         \e[%d;1m||  \n"
-                "\e[%d;1m||    3    \e[%d;1m||  \n"
-                "\e[%d;1m||         \e[%d;1m||  \n"
-                "\e[%d;1m||         \e[%d;1m||  \n"
-                " \e[%d;1m||||||\e[%d;1m||||| \e[0m\n\n",RED,YELLOW,RED,YELLOW,RED,YELLOW,RED,GREEN,BLUE,GREEN,BLUE,GREEN,BLUE,GREEN,BLUE,GREEN);
-                printf("Wild card:\nThis card can be used as a card of any number but must be the color shown on the card (in this case yellow)\n");
-                printf(" \e[%d;1m||||||||||| \n"
-                "||         ||  \n"
-                "||         ||  \n"
-                "||   any   ||  \n"
-                "||         ||  \n"
-                "||         ||  \n"
-                " ||||||||||| \e[0m\n\n",YELLOW);*/
-                printf("Action card:\nThis card is used to draw two cards. It cannot be used for guessing and only one can be used per turn.\n");
+                printf("Action card:\nThis card is used to draw two cards. It cannot be used for guessing and only one can be used per turn.\n"); //+2 card
                 printf(" \e[%d;1m||||||||||| \n"
                 "||         ||  \n"
                 "||         ||  \n"
                 "||  add 2  ||  \n"
                 "||         ||  \n"
                 "||         ||  \n"
-                " ||||||||||| \e[0m\n",0);
+                " ||||||||||| \e[0m\n\n",0);
                 break;
 
-            case 6:
-                printf(" \e[%d;1m|||||||\n",GREEN);
+            case 6: //examples and how guessing works
+                printf(" \e[%d;1m|||||||\n",GREEN); //displays a wild peice
                 for(int i = 0; i<3; i++)
                 {
                     printf("||  *  ||\n");
@@ -314,7 +287,7 @@ int main()
                 printf(" |||||||\e[0m\n");
                 printf("NOTE: if part of the code looks like the thing depicted above, any number can be matched with it\n\n");
                 printf("To match a card, it must have the same color as the code and one of the numbers of the code. For instance:\n");
-                printf("\e[0m    MATCH           |         NOT MATCH         |         NOT MATCH         |           MATCH           |         NOT MATCH\n");
+                printf("\e[0m    MATCH           |         NOT MATCH         |         NOT MATCH         |           MATCH           |         NOT MATCH\n"); //just a couple cases
                 printf("\e[0m                    |                           |                           |                           |\n");
 
             printf(" \e[%d;1m  |||||||          \e[0m|          \e[%d;1m|||||||          \e[0m|          \e[%d;1m|||||||          \e[0m|          \e[%d;1m|||||||          \e[0m|          \e[%d;1m||||||| \n"
@@ -336,17 +309,11 @@ int main()
 
 
             default:
-                printf("That is not a valid number.\n");
+                printf("That is not a valid number.\n\n"); //uh oh user entered an unreasonable number
                 break;
-
-
-
-
-
-
         }
 
-        printf("\nAction: ");
+        printf("Action: "); //reuptake action to go to next item
         tmpchar = getchar();
         if(tmpchar == '\n')
         {
@@ -375,7 +342,8 @@ int main()
     }
 
 
-    printf("To view the tutorial again run './tutorial'. To play the game run './game'\n\e[0m");
+    system("clear");
+    printf("You have exited the tutorial. To view it again run './tutorial'. To play the game run './game'\n\e[0m"); //line at very end to confirm escape
 
 
     return 0;
