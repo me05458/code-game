@@ -10,7 +10,7 @@ void cleanChar()
     while(getchar() != '\n') //it just slurps up the characters in input until there are none left
         continue;
 }
-
+//"\x1b[48;2;%d;%d;%dm  \x1b[0m"
 
 int main()
 {
@@ -148,6 +148,28 @@ int main()
                 printf("The squares above should of the following colors: default (often white), gray, red, yellow, green, blue\n");
                 printf("If the squares are not of those colors but you can tell the difference between them, the game might look a little wonky but should still be playable.\n");
                 printf("If you cannot differentiate between the squares, not all is lost! Play the game in colorless mode.\nTo do this, run 'make clean' and then 'make colorless'. If you want to go back to normal mode, run 'make clean' and 'make'. It is recommended to always clean when switching between modes.\nNOTE: tutorial is not designed to support colorless mode so things are just going to look weird.\n\n");
+                printf("\nKeep checking?(1/0): ");
+                tmpchar = getchar(); //repeat the whole thing with the slorpery
+                if(tmpchar == '\n')
+                {
+                    tmp1 = 1;
+                }
+                else
+                {
+                    tmp1 = charEater(tmpchar);
+                    cleanChar();
+                }
+                if(tmp1 != 1)
+                {
+                    system("clear");
+                    break;
+                }
+                system("clear");
+                printf("The two following lines should be a sort of blue color as described bellow. This is only important for the tutorial, it won't come up in the actual game.\n\n");
+                printf("\x1b[48;2;150;150;225m         \e[30mcolor here\e[0m\x1b[48;2;150;150;225m        \e[0m");
+                printf(" <--- This line should be solid one color (and this text should be default color)\n\n");
+                printf("\x1b[48;2;150;150;225m  \e[0m     no color here     \x1b[48;2;150;150;225m  \e[0m");
+                printf(" <--- This line should be solid color on the edges (and this text should be default color)\n\n");
                 break;
             case 4: //game set up!
                 system("clear");
@@ -196,49 +218,51 @@ int main()
                 }
 
                 system("clear");
-                printf("* * * * * * * * * * * * *\n"); //stars outline the different possible things should make them highlighted?
-                printf("* Turns: %d\tStep: %d *\n",0,1);
-                printf("* * * * * * * * * * * * *");
+                printf("\x1b[48;2;225;225;150m                          \n"); //stars outline the different possible things should make them highlighted?
+                printf("\x1b[48;2;225;225;150m  \e[0m Turns: %d\tStep: %d \x1b[48;2;225;225;150m  \e[0m\n",0,1);
+                printf("\x1b[48;2;225;225;150m                          \e[0m");
                 printf(" <------- This keeps track of the turn and step you are on\n");
                 printf("\n");
-                printf("* * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
-                printf("* ------------------------------------------------  *\n");
-                printf("\e[0m* \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||  \e[0m *\n",RED, YELLOW,GREEN,BLUE);
+                printf("\x1b[48;2;225;150;225m                                                      \n");
+                printf("\x1b[48;2;225;150;225m  \e[0m ------------------------------------------------ \x1b[48;2;225;150;225m  \e[0m\n");
+                printf("\x1b[48;2;225;150;225m  \e[0m \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||  \x1b[48;2;225;150;225m  \e[0m\n",RED, YELLOW,GREEN,BLUE);
                 for(int i = 0; i<3; i++) //wanna do each of the possible numbers
                 {
-                    printf("\e[0m* \e[%d;1m||  %d  ||    \e[%d;1m||  %d  ||    \e[%d;1m||  %d  ||    \e[%d;1m",RED, i, YELLOW, i, GREEN, i, BLUE);
-                        printf("||  %d  || \e[0m *\n", i);
+                    printf("\x1b[48;2;225;150;225m  \e[0m \e[%d;1m||  %d  ||    \e[%d;1m||  %d  ||    \e[%d;1m||  %d  ||   \e[%d;1m",RED, i, YELLOW, i, GREEN, i, BLUE);
+                        printf(" ||  %d  || \x1b[48;2;225;150;225m  \e[0m\n", i);
 
                 }
-                printf("\e[0m* \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||  \e[0m *\n",RED, YELLOW,GREEN,BLUE);
-                printf("* ------------------------------------------------  *\n");
-                printf("* * * * * * * * * * * * * * * * * * * * * * * * * * *");
+                printf("\x1b[48;2;225;150;225m  \e[0m \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||     \e[%d;1m |||||||  \e[0m\x1b[48;2;225;150;225m  \e[0m\n",RED, YELLOW,GREEN,BLUE);
+                printf("\x1b[48;2;225;150;225m  \e[0m ------------------------------------------------ \x1b[48;2;225;150;225m  \e[0m\n");
+                printf("\x1b[48;2;225;150;225m                                                      \e[0m");
                 printf(" <------- This is your code. In order for a card to match, it must have the same color as one of the collumns, and one of the numbers in the collumn.\n");
                 printf("\n");
-                printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
-                printf("* ");
+                printf("\x1b[48;2;150;225;225m                                                                   \n");
+                printf("\x1b[48;2;150;225;225m  \e[0m");
+                printf("  ");
                 for(int i = 0; i<4; i++)
                 {
                     printf("\e[0m      %d        ", i);
                 }
-                printf("  *\n");
-                printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+                printf(" \x1b[48;2;150;225;225m  \e[0m\n");
+                printf("\x1b[48;2;150;225;225m                                                                   \e[0m");
                 printf(" <------- These are your card numbers. Whenever you work with your cards, you will use these numbers to refer to them.\n");
-                printf("\n* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n");
-
-                printf("\e[0m* \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||    \e[0m *\n",BLUE,GREEN,YELLOW,RED);
-                printf("* \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m *\n",BLUE,GREEN,YELLOW,RED);
-                printf("* \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m *\n",BLUE,GREEN,YELLOW,RED);
-                printf("* \e[%d;1m||    5    ||  \e[%d;1m||    2    ||  \e[%d;1m||    0    ||  \e[%d;1m||    3    ||   \e[0m *\n",BLUE,GREEN,YELLOW,RED);
-                printf("* \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m *\n",BLUE,GREEN,YELLOW,RED);
-                printf("* \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||   \e[0m *\n",BLUE,GREEN,YELLOW,RED);
-                printf("\e[0m* \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||    \e[0m *\n",BLUE,GREEN,YELLOW,RED);
-                printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *");
+                printf("\n\x1b[48;2;150;150;225m                                                                \n");
+                printf("\x1b[48;2;150;150;225m  \e[0m                                                            \x1b[48;2;150;150;225m  \e[0m\n");
+                printf("\x1b[48;2;150;150;225m  \e[0m\e[%d;1m  |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||  \x1b[48;2;150;150;225m  \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\x1b[48;2;150;150;225m  \e[0m\e[%d;1m ||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         || \x1b[48;2;150;150;225m  \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\x1b[48;2;150;150;225m  \e[0m\e[%d;1m ||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         || \x1b[48;2;150;150;225m  \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\x1b[48;2;150;150;225m  \e[0m\e[%d;1m ||    5    ||  \e[%d;1m||    2    ||  \e[%d;1m||    0    ||  \e[%d;1m||    3    || \e[0m\x1b[48;2;150;150;225m  \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\x1b[48;2;150;150;225m  \e[0m\e[%d;1m ||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         || \x1b[48;2;150;150;225m  \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\x1b[48;2;150;150;225m  \e[0m\e[%d;1m ||         ||  \e[%d;1m||         ||  \e[%d;1m||         ||  \e[%d;1m||         || \x1b[48;2;150;150;225m  \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\x1b[48;2;150;150;225m  \e[0m\e[%d;1m  |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||   \e[%d;1m |||||||||||  \x1b[48;2;150;150;225m  \e[0m\n",BLUE,GREEN,YELLOW,RED);
+                printf("\x1b[48;2;150;150;225m  \e[0m                                                            \x1b[48;2;150;150;225m  \e[0m\n");
+                printf("\x1b[48;2;150;150;225m                                                                \e[0m");
                 printf(" <------- These are the cards in your hand. You want to match them to the code.\n\n");
 
-                printf("* * * * * * * * * * * * *\n");
-                printf("* Action (0 for help):  *\n");
-                printf("* * * * * * * * * * * * *");
+                printf("\x1b[48;2;225;150;150m                           \n");
+                printf("\x1b[48;2;225;150;150m  \e[0m Action (0 for help):  \x1b[48;2;225;150;150m  \e[0m\n");
+                printf("\x1b[48;2;225;150;150m                           \e[0m");
                 printf(" <------- This is the prompt where you type commands\n\n");
                 break;
 
